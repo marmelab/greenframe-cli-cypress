@@ -44,6 +44,9 @@ class OpenCommand extends Command {
         timezoneId: Flags.boolean({
             description: 'Set greenframe browser timezoneId',
         }),
+        useCypress: Flags.boolean({
+            description: 'Use cypress to run your scenario',
+        }),
     };
 
     async run() {
@@ -74,6 +77,7 @@ class OpenCommand extends Command {
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
                     locale: flags.locale,
                     timezoneId: flags.timezoneId,
+                    useCypress: flags.useCypress,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${

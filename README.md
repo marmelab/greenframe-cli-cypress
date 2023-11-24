@@ -240,6 +240,7 @@ USAGE
     [--commitId <value>] [-b <value>] [-s <value>] [-a] [-i] [--locale] [--timezoneId] [-e <value>] [-E <value>]
     [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
     [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
+    [--useCypress]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -259,15 +260,16 @@ FLAGS
   -t, --threshold=<value>           Consumption threshold
   --commitId=<value>                Pass commit id manually
   --containers=<value>              Pass containers manually
+  --cypressConfigFile=<value>       Path to custom cypress config file
   --databaseContainers=<value>      Pass database containers manually
   --dockerdHost=<value>             Docker daemon host
   --dockerdPort=<value>             Docker daemon port
   --kubeContainers=<value>          Pass kubebernetes containers manually
   --kubeDatabaseContainers=<value>  Pass kubebernetes database containers manually
-  --timeout=<value>                 Timeout for the scenario run in milliseconds
-  --cypressConfigFile=<value>       Path to custom cypress config file
   --locale                          Set greenframe browser locale
+  --timeout=<value>                 Timeout for scenario run in ms
   --timezoneId                      Set greenframe browser timezoneId
+  --useCypress                      Use cypress to run scenario
 
 DESCRIPTION
   Create an analysis on GreenFrame server.
@@ -302,7 +304,7 @@ Open browser to develop your GreenFrame scenario
 
 ```
 USAGE
-  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId]
+  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId] [useCypress]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -314,6 +316,7 @@ FLAGS
   --ignoreHTTPSErrors       Ignore HTTPS errors during analysis
   --locale                  Set greenframe browser locale
   --timezoneId              Set greenframe browser timezoneId
+  --useCypress              Use cypress to run scenario
 
 DESCRIPTION
   Open browser to develop your GreenFrame scenario

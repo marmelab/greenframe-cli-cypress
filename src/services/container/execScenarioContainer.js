@@ -63,7 +63,15 @@ const startContainer = async () => {
 const execScenarioContainer = async (
     scenario,
     url,
-    { useAdblock, ignoreHTTPSErrors, locale, timezoneId, timeout, cypressConfigFile } = {}
+    {
+        useAdblock,
+        ignoreHTTPSErrors,
+        locale,
+        timezoneId,
+        timeout,
+        cypressConfigFile,
+        useCypress,
+    } = {}
 ) => {
     try {
         let command = `docker exec ${CONTAINER_DEVICE_NAME} node /greenframe/dist/runner/index.js --scenario="${encodeURIComponent(
@@ -92,6 +100,10 @@ const execScenarioContainer = async (
 
         if (cypressConfigFile) {
             command += ` --cypressConfigFile=${cypressConfigFile}`;
+        }
+
+        if (useCypress) {
+            command += ` --useCypress`;
         }
 
         debug(`Executing command: ${command}`);
