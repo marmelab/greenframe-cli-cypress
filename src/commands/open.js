@@ -1,5 +1,8 @@
 const { Command, Flags } = require('@oclif/core');
 const path = require('node:path');
+const util = require('node:util');
+const exec = util.promisify(require('node:child_process').exec);
+const { Confirm } = require('enquirer');
 
 const { parseConfigFile, resolveParams } = require('../services/parseConfigFile');
 
@@ -62,6 +65,30 @@ class OpenCommand extends Command {
         );
 
         const executablePath = await detectExecutablePath();
+
+        if (flags.useCypress) {
+            try {
+                require.resolve('cypress');
+            } catch {
+                console.error(
+                    'Cypress is not installed. You need to install it to use greenframe open command.'
+                );
+                const prompt = new Confirm({
+                    name: 'installCypress',
+                    message: 'Do you want to run npm install cypress ?',
+                });
+
+                const answer = await prompt.run();
+
+                if (!answer) {
+                    process.exit(0);
+                }
+
+                const { stdout, stderr } = await exec('npm install cypress');
+                console.info(stdout);
+                console.error(stderr);
+            }
+        }
 
         console.info(`Running ${args.scenarios.length} scenarios...`);
         for (let index = 0; index < args.scenarios.length; index++) {
