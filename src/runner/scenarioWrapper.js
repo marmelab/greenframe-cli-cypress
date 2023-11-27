@@ -33,7 +33,11 @@ const executeScenario = async (scenario, options = {}) => {
         testingType: 'e2e',
         project: options.debug ? PROJECT_ROOT : '/scenarios',
         spec: scenario,
-        config: { baseUrl: options.baseUrl, specPattern: scenario },
+        config: {
+            baseUrl: options.baseUrl,
+            specPattern: scenario,
+            screenshotOnRunFailure: false,
+        },
         headless: !options.debug,
         headed: options.debug,
         quiet: true,
@@ -41,6 +45,7 @@ const executeScenario = async (scenario, options = {}) => {
             options.cypressConfigFile || options.debug
                 ? `${PROJECT_ROOT}/cypress/cypress.config.ts`
                 : '/scenarios/default-greenframe-config/cypress.config.ts',
+        runnerUi: false,
     });
 
     if (cypressResults.status === 'failed') {
@@ -49,6 +54,10 @@ const executeScenario = async (scenario, options = {}) => {
 
     if (cypressResults.runs[0].error) {
         throw new Error(cypressResults.runs[0].error);
+    }
+
+    if (cypressResults.run[0].tests[0].state === 'failed') {
+        throw new Error(cypressResults.run[0].tests[0].displayError);
     }
 
     start = cypressResults.runs[0].stats.startedAt;
