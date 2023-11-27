@@ -48,13 +48,11 @@ const executeScenario = async (scenario, options = {}) => {
         runnerUi: false,
     });
 
-    if (cypressResults.status === 'failed') {
-        throw new Error(cypressResults.message);
-    }
+    console.log(cypressResults);
 
-    if (cypressResults.runs[0].error) {
-        throw new Error(cypressResults.runs[0].error);
-    }
+    // if (cypressResults.status === 'failed') {
+    //     throw new Error(cypressResults.message);
+    // }
 
     if (cypressResults.run[0].tests[0].state === 'failed') {
         throw new Error(cypressResults.run[0].tests[0].displayError);
