@@ -70,7 +70,7 @@ const execScenarioContainer = async (
         timezoneId,
         timeout,
         cypressConfigFile,
-        useCypress,
+        runner,
     } = {}
 ) => {
     try {
@@ -102,8 +102,8 @@ const execScenarioContainer = async (
             command += ` --cypressConfigFile=${cypressConfigFile}`;
         }
 
-        if (useCypress) {
-            command += ` --useCypress`;
+        if (runner) {
+            command += ` --runner=${runner}`;
         }
 
         debug(`Executing command: ${command}`);

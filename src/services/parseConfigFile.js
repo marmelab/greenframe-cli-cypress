@@ -48,7 +48,7 @@ const parseConfigFile = async (path) => {
                 timezoneId,
                 cypressConfigFile,
                 timeout,
-                useCypress,
+                runner,
             } = fileContent;
 
             return {
@@ -77,7 +77,7 @@ const parseConfigFile = async (path) => {
                     timezoneId,
                     cypressConfigFile,
                     timeout,
-                    useCypress,
+                    runner,
                 },
             };
         }

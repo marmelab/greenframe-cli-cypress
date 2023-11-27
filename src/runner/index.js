@@ -31,7 +31,7 @@ const getFilePath = (file) => {
         timezoneId: args.timezoneId,
         timeout: args.timeout,
         cypressConfigFile: cypressConfigFile,
-        useCypress: args.useCypress,
+        runner: args.runner,
     });
     console.log('=====TIMELINES=====');
     console.log(JSON.stringify(timelines));

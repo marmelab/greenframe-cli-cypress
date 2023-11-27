@@ -27,7 +27,7 @@ const executeScenario = async (scenario, options = {}) => {
         throw new Error(`Timeout: Your scenario took more than ${timeout / 1000}s`);
     }, timeout);
 
-    if (options.useCypress) {
+    if (options.runner === 'cypress') {
         const cypress = require('cypress');
         const cypressResults = await cypress.run({
             browser: 'chrome',

@@ -47,8 +47,8 @@ class OpenCommand extends Command {
         timezoneId: Flags.boolean({
             description: 'Set greenframe browser timezoneId',
         }),
-        useCypress: Flags.boolean({
-            description: 'Use cypress to run your scenario',
+        runner: Flags.string({
+            description: 'Scenario runner to use',
         }),
     };
 
@@ -66,7 +66,7 @@ class OpenCommand extends Command {
 
         const executablePath = await detectExecutablePath();
 
-        if (flags.useCypress) {
+        if (flags.runner === 'cypress') {
             try {
                 require.resolve('cypress');
             } catch {
@@ -104,7 +104,7 @@ class OpenCommand extends Command {
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
                     locale: flags.locale,
                     timezoneId: flags.timezoneId,
-                    useCypress: flags.useCypress,
+                    runner: flags.runner,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${

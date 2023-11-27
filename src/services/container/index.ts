@@ -49,7 +49,7 @@ export const executeScenarioAndGetContainerStats = async ({
     dockerdPort,
     timeout,
     cypressConfigFile,
-    useCypress,
+    runner,
 }: {
     scenario: string;
     url: string;
@@ -69,7 +69,7 @@ export const executeScenarioAndGetContainerStats = async ({
     dockerdPort?: number;
     timeout?: number;
     cypressConfigFile?: string;
-    useCypress?: boolean;
+    runner?: string;
 }) => {
     try {
         debug('Starting container');
@@ -149,7 +149,7 @@ export const executeScenarioAndGetContainerStats = async ({
                 timezoneId,
                 timeout,
                 cypressConfigFile,
-                useCypress,
+                runner,
             });
 
             allMilestones.push(milestones);

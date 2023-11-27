@@ -38,7 +38,7 @@ export default async (ctx: any) => {
                     timezoneId: flags.timezoneId,
                     timeout: flags.timeout,
                     cypressConfigFile: flags.cypressConfigFile,
-                    useCypress: flags.useCypress,
+                    runner: flags.runner,
                 });
 
             const data = computeScenarioResult({

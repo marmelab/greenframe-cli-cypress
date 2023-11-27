@@ -240,7 +240,7 @@ USAGE
     [--commitId <value>] [-b <value>] [-s <value>] [-a] [-i] [--locale] [--timezoneId] [-e <value>] [-E <value>]
     [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
     [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
-    [--useCypress]
+    [--runner <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -269,7 +269,7 @@ FLAGS
   --locale                          Set greenframe browser locale
   --timeout=<value>                 Timeout for scenario run in ms
   --timezoneId                      Set greenframe browser timezoneId
-  --useCypress                      Use cypress to run scenario
+  --runner                          Set the scenario runner (default: playwright)
 
 DESCRIPTION
   Create an analysis on GreenFrame server.
@@ -304,7 +304,7 @@ Open browser to develop your GreenFrame scenario
 
 ```
 USAGE
-  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId] [useCypress]
+  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId] [--runner <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -316,7 +316,7 @@ FLAGS
   --ignoreHTTPSErrors       Ignore HTTPS errors during analysis
   --locale                  Set greenframe browser locale
   --timezoneId              Set greenframe browser timezoneId
-  --useCypress              Use cypress to run scenario
+  --runner                  Set the scenario runner (default: playwright)
 
 DESCRIPTION
   Open browser to develop your GreenFrame scenario
