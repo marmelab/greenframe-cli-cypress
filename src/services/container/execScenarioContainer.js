@@ -100,9 +100,6 @@ const execScenarioContainer = async (
 
         const { stdout, stderr } = await exec(command);
 
-        debug(`stdout: ${stdout}`);
-        debug(`stderr: ${stderr}`);
-
         if (stderr && !stderr.includes(GARBAGE_CYPRESS_ERROR)) {
             throw new Error(stderr);
         }
