@@ -144,6 +144,9 @@ class AnalyzeCommand extends Command {
         cypressConfigFile: Flags.string({
             description: 'Path to custom cypress config file',
         }),
+        runner: Flags.string({
+            description: 'Scenario runner to use',
+        }),
     };
 
     async run() {
