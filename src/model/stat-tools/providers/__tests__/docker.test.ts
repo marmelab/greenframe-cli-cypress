@@ -1,6 +1,6 @@
+import { expect, test } from '@jest/globals';
 import type { DockerStatsJSON } from '../../../../types';
 import { docker, sumBlkioStats } from '../docker';
-import { expect } from '@playwright/test';
 
 test('computeGenericStats', () => {
     const stats: DockerStatsJSON[] = [

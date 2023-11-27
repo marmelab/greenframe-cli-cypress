@@ -5,5 +5,5 @@
     "types": ["cypress", "node"],
     "sourceMap": false,
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "cypress.config.js"],
 }

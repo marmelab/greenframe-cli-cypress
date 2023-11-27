@@ -1,5 +1,4 @@
-import '@testing-library/jest-dom/extend-expect';
-import { it, expect } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 
 jest.mock('node:http', () => ({
     request: jest
