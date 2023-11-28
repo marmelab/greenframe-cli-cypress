@@ -26,26 +26,17 @@ build: clean-dist ## Create tarballs of CLI
 	yarn build && yarn set version classic && npx oclif pack tarballs -t $(BUILD_TARGETS)
 	$(MAKE) generate-wsl-cli
 
+rename-tarballs: ## Rename tarballs
+	for target in $(shell echo $(DEPLOY_TARGETS) | tr ',' ' '); do \
+		mv ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-$$target.tar.gz ./dist/greenframe-$$target.tar.gz; \
+	done
+
 generate-wsl-cli: ## Generate WSL version of CLI
 	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64.tar.gz ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64.tar.gz
 	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64.tar.xz ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64.tar.xz
 	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64-buildmanifest ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64-buildmanifest
 	sed -i 's/linux/wsl/g' ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64-buildmanifest
-
-upload: ## Upload tarballs to S3 bucket
-	npx oclif upload tarballs -t $(DEPLOY_TARGETS)
-
-promote-staging: ## Publish uploaded tarballs on a staging channel
-	npx oclif promote --version $(PACKAGE_VERSION) --sha $(SHORT_HASH) --channel staging -t $(DEPLOY_TARGETS) && yarn set version stable
-
-promote-prerelease: ## Publish uploaded tarballs on a prerelease channel
-	npx oclif promote --version $(PACKAGE_VERSION) --sha $(SHORT_HASH) --channel prerelease -t $(DEPLOY_TARGETS) && yarn set version stable
-
-upload-installation-scripts: ## Publish on the bucket installion bash scripts
-	yarn upload-installation-scripts
-
-promote-production: upload-installation-scripts ## Publish uploaded tarballs on a stable channel
-	npx oclif promote --version $(PACKAGE_VERSION) --sha $(SHORT_HASH) -t $(DEPLOY_TARGETS) && yarn set version stable
+	${MAKE} rename-tarballs
 
 test: test-unit test-e2e ## Launch all tests
 

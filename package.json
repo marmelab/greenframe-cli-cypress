@@ -1,12 +1,12 @@
 {
-    "name": "greenframe-cli",
-    "description": "Official GreenFrame CLI",
-    "version": "1.7.0",
+    "name": "greenframe-cli-cypress",
+    "description": "Official GreenFrame CLI with Cypress runner",
+    "version": "0.1.0",
     "author": "Marmelab",
     "bin": {
         "greenframe": "./bin/run"
     },
-    "bugs": "https://github.com/marmelab/greenframe-cli/issues",
+    "bugs": "https://github.com/marmelab/greenframe-cli-cypress/issues",
     "dependencies": {
         "@kubernetes/client-node": "^0.17.0",
         "@oclif/core": "^1.2.0",
@@ -70,11 +70,11 @@
         "/dist",
         "/src/examples"
     ],
-    "homepage": "https://github.com/marmelab/greenframe",
+    "homepage": "https://github.com/marmelab/greenframe-cli-cypress",
     "keywords": [
         "oclif"
     ],
-    "license": "UNLICENSED",
+    "license": "Elastic License 2.0",
     "exports": {
         ".": {
             "default": "./dist/index.js",
@@ -104,7 +104,7 @@
             }
         }
     },
-    "repository": "marmelab/greenframe-cli",
+    "repository": "marmelab/greenframe-cli-cypress",
     "scripts": {
         "watch": "rm -rf ./dist && mkdir -p ./dist/bash && cp -R ./src/bash ./dist/ && tsc --watch",
         "build": "rm -rf ./dist && tsc && mkdir -p ./dist/bash &&cp -R ./src/bash ./dist/",
@@ -119,7 +119,6 @@
         "pack": "oclif pack tarballs",
         "analyze": "API_URL=http://localhost:3006 APP_URL=http://localhost:3003 ./bin/run analyze",
         "open": "API_URL=http://localhost:3006 APP_URL=http://localhost:3003 ./bin/run open",
-        "upload-installation-scripts": "node ./scripts/uploadInstallScript.js",
         "lint": "eslint .",
         "typecheck": "tsc --noEmit --pretty"
     },
