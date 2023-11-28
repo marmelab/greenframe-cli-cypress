@@ -1,0 +1,4 @@
+scenario: './src/examples/cypress.cy.ts'
+baseURL: 'https://example.cypress.io/'
+samples: 2
+projectName: 'Marmelab'

@@ -1,11 +1,11 @@
 import initDebug from 'debug';
 import { saveFinishedAnalysis } from '../services/api/analyses';
 
+import { computeAnalysisResult } from '../services/computeAnalysisResult';
 import { computeScenarioResult, ScenarioResult } from '../services/computeScenarioResult';
 import { executeScenarioAndGetContainerStats } from '../services/container';
 import ConfigurationError from '../services/errors/ConfigurationError';
 import ERROR_CODES from '../services/errors/errorCodes';
-import { computeAnalysisResult } from '../services/computeAnalysisResult';
 
 const debug = initDebug('greenframe:tasks:runScenarioAndSaveResults');
 
@@ -18,28 +18,28 @@ export default async (ctx: any) => {
         debug(`Running scenario ${scenario.path}...`);
 
         try {
-            const { allContainers, allMilestones } =
-                await executeScenarioAndGetContainerStats({
-                    scenario: scenario.path,
-                    url: args.baseURL,
-                    samples: flags.samples,
-                    containers: flags.containers,
-                    databaseContainers: flags.databaseContainers,
-                    kubeContainers: flags.kubeContainers,
-                    kubeDatabaseContainers: flags.kubeDatabaseContainers,
-                    extraHosts: flags.extraHosts,
-                    envVars: flags.envVar,
-                    envFile: flags.envFile,
-                    dockerdHost: flags.dockerdHost,
-                    dockerdPort: flags.dockerdPort,
-                    ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                    locale: flags.locale,
-                    timezoneId: flags.timezoneId,
-                });
+            const { allContainers } = await executeScenarioAndGetContainerStats({
+                scenario: scenario.path,
+                url: args.baseURL,
+                samples: flags.samples,
+                containers: flags.containers,
+                databaseContainers: flags.databaseContainers,
+                kubeContainers: flags.kubeContainers,
+                kubeDatabaseContainers: flags.kubeDatabaseContainers,
+                extraHosts: flags.extraHosts,
+                envVars: flags.envVar,
+                envFile: flags.envFile,
+                dockerdHost: flags.dockerdHost,
+                dockerdPort: flags.dockerdPort,
+                ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
+                locale: flags.locale,
+                timezoneId: flags.timezoneId,
+                timeout: flags.timeout,
+                cypressConfigFile: flags.cypressConfigFile,
+            });
 
             const data = computeScenarioResult({
                 allContainersStats: allContainers,
-                milestones: allMilestones,
                 threshold: scenario.threshold,
                 name: scenario.name,
                 executionCount: scenario.executionCount,

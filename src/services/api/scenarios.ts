@@ -8,7 +8,6 @@ export const createScenario = async ({
     name,
     threshold,
     allContainers,
-    allMilestones,
     errorCode,
     errorMessage,
 }: any) => {
@@ -23,7 +22,6 @@ export const createScenario = async ({
         name,
         threshold,
         allContainersStats: allContainers,
-        milestones: allMilestones,
         errorCode,
         errorMessage,
     });
