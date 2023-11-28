@@ -1,8 +1,7 @@
+import { expect, test } from '@jest/globals';
 import type { TimeFrameWithMeta } from '../../../types';
 import type { TimeFrameStore } from '../timeframeStore';
 import { createTimeFrameStore, getTitles } from '../timeframeStore';
-import { expect } from '@playwright/test';
-import { test } from '@jest/globals';
 
 const generator = [
     [0, 0, '00:00:00Z', '00:00:01Z', 'title 0 0 - milestone 1'],

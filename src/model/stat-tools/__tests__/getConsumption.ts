@@ -1,5 +1,5 @@
+import { describe, expect, it } from '@jest/globals';
 import { getStandardError } from '../getConsumption';
-import { expect } from '@playwright/test';
 
 describe('getStandardError', () => {
     it('Should return good standard error in percentage (~5)', () => {

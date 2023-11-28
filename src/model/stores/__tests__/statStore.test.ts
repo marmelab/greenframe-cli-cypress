@@ -1,9 +1,8 @@
-import { createStatStore, getComputedStat, getContainers } from '../statStore';
-import type { StatStore } from '../statStore';
-import { ComputedStatWithMeta, Meta } from '../../../types';
+import { expect, it, test } from '@jest/globals';
 import { CONTAINER_TYPES } from '../../../constants';
-import { expect } from '@playwright/test';
-import { it, test } from '@jest/globals';
+import { ComputedStatWithMeta, Meta } from '../../../types';
+import type { StatStore } from '../statStore';
+import { createStatStore, getComputedStat, getContainers } from '../statStore';
 
 const generator: Array<[number, number, string, number]> = [
     [0, 0, '00Z', 1e3],

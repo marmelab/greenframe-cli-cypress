@@ -1,5 +1,5 @@
 # Script to get host ip address in order to be able to map localhost to our docker container
-# Our playwright container should be able to query localhost network by using this IP.
+# Our runner container should be able to query localhost network by using this IP.
 
 if command -v ip 1> /dev/null;
 then

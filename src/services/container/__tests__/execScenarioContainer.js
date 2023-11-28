@@ -1,3 +1,5 @@
+const { describe, expect, it } = require('@jest/globals');
+
 jest.mock('node:child_process', () => ({
     exec: jest.fn(),
 }));
@@ -75,36 +77,36 @@ describe('#createContainer', () => {
     it('Should call exec with good command', async () => {
         exec.mockReturnValueOnce({ stdout: 'HOST_IP' });
         await createContainer();
-        expect(exec).toHaveBeenCalledTimes(3);
+        expect(exec).toHaveBeenCalledTimes(4);
         expect(exec.mock.calls[1][0]).toContain(
-            'docker create --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP --add-host localhost:HOST_IP'
+            'docker create --entrypoint=/bin/sh --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP --add-host localhost:HOST_IP'
         );
     });
 
     it('Should call exec with extraHosts', async () => {
         exec.mockReturnValueOnce({ stdout: 'HOST_IP' });
         await createContainer(['example.com', 'another-example.com']);
-        expect(exec).toHaveBeenCalledTimes(3);
+        expect(exec).toHaveBeenCalledTimes(4);
         expect(exec.mock.calls[1][0]).toContain(
-            'docker create --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP -e EXTRA_HOSTS=example.com,another-example.com --add-host localhost:HOST_IP  --add-host example.com:HOST_IP --add-host another-example.com:HOST_IP'
+            'docker create --entrypoint=/bin/sh --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP -e EXTRA_HOSTS=example.com,another-example.com --add-host localhost:HOST_IP  --add-host example.com:HOST_IP --add-host another-example.com:HOST_IP'
         );
     });
 
     it('Should call exec with env vars', async () => {
         exec.mockReturnValueOnce({ stdout: 'HOST_IP' });
         await createContainer([], ['VAR_ONE=one', 'VAR_TWO=two']);
-        expect(exec).toHaveBeenCalledTimes(3);
+        expect(exec).toHaveBeenCalledTimes(4);
         expect(exec.mock.calls[1][0]).toContain(
-            'docker create --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP -e VAR_ONE=one -e VAR_TWO=two '
+            'docker create --entrypoint=/bin/sh --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP -e VAR_ONE=one -e VAR_TWO=two '
         );
     });
 
     it('Should call exec with env file', async () => {
         exec.mockReturnValueOnce({ stdout: 'HOST_IP' });
         await createContainer([], [], './.env.local');
-        expect(exec).toHaveBeenCalledTimes(3);
+        expect(exec).toHaveBeenCalledTimes(4);
         expect(exec.mock.calls[1][0]).toContain(
-            'docker create --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP --env-file ./.env.local '
+            'docker create --entrypoint=/bin/sh --tty --name greenframe-runner --rm -e HOSTIP=HOST_IP --env-file ./.env.local '
         );
     });
 

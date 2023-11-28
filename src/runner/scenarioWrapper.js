@@ -43,8 +43,8 @@ const executeScenario = async (scenario, options = {}) => {
         quiet: true,
         configFile:
             options.cypressConfigFile || options.debug
-                ? `${PROJECT_ROOT}/cypress/cypress.config.ts`
-                : '/scenarios/default-greenframe-config/cypress.config.ts',
+                ? `${PROJECT_ROOT}/cypress/cypress.config.js`
+                : '/scenarios/default-greenframe-config/cypress.config.js',
         runnerUi: false,
     });
 
@@ -56,8 +56,8 @@ const executeScenario = async (scenario, options = {}) => {
         throw new Error(cypressResults.runs[0].error);
     }
 
-    if (cypressResults.run[0].tests[0].state === 'failed') {
-        throw new Error(cypressResults.run[0].tests[0].displayError);
+    if (cypressResults.runs[0].tests[0].state === 'failed') {
+        throw new Error(cypressResults.runs[0].tests[0].displayError);
     }
 
     start = cypressResults.runs[0].stats.startedAt;

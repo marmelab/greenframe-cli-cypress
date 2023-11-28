@@ -1,5 +1,5 @@
+import { describe, expect, it } from '@jest/globals';
 import { getAverageMilestones } from '../getAverageMilestones';
-import { expect } from '@playwright/test';
 
 describe('#getAverageMilestones', () => {
     it('Should return min milestones for each samples', () => {
