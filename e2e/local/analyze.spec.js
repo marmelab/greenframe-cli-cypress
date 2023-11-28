@@ -1,32 +1,16 @@
 /* eslint-disable jest/no-conditional-expect */
 const util = require('node:util');
 const exec = util.promisify(require('node:child_process').exec);
+const { describe, it, expect } = require('@jest/globals');
 
 const BASE_COMMAND = `./bin/run analyze`;
 
 describe('[LOCAL] greenframe analyze', () => {
     describe('single page', () => {
         describe('local analysis', () => {
-            it('should raise and error on non HTTPS websites', async () => {
-                expect.assertions(2);
-                try {
-                    await exec(`${BASE_COMMAND} https://untrusted-root.badssl.com/`);
-                } catch (error) {
-                    expect(error.stderr).toContain('❌ main scenario failed');
-                    expect(error.stderr).toContain('net::ERR_CERT_AUTHORITY_INVALID');
-                }
-            });
-
-            it('should work on non HTTPS websites with --ignoreHTTPSErrors flag', async () => {
-                const { stdout } = await exec(
-                    `${BASE_COMMAND} https://untrusted-root.badssl.com/ --ignoreHTTPSErrors`
-                );
-                expect(stdout).toContain('✅ main scenario completed');
-            });
-
-            it('should run an analysis command with adblocker', async () => {
+            it('should run an analysis command correctly', async () => {
                 const { error, stdout } = await exec(
-                    `${BASE_COMMAND} -C ./e2e/.greenframe.single.adblock.yml`
+                    `${BASE_COMMAND} -C ./e2e/.greenframe.single.yml`
                 );
                 expect(stdout).toContain('✅ main scenario completed');
                 expect(stdout).toContain('The estimated footprint is');

@@ -45,6 +45,8 @@ export const executeScenarioAndGetContainerStats = async ({
     envFile = '',
     dockerdHost,
     dockerdPort,
+    timeout,
+    cypressConfigFile,
 }: {
     scenario: string;
     url: string;
@@ -60,11 +62,13 @@ export const executeScenarioAndGetContainerStats = async ({
     envFile?: string;
     dockerdHost?: string;
     dockerdPort?: number;
+    timeout?: number;
+    cypressConfigFile?: string;
 }) => {
     try {
         debug('Starting container');
         await stopContainer();
-        await createContainer(extraHosts, envVars, envFile);
+        await createContainer(extraHosts, envVars, envFile, Boolean(cypressConfigFile));
         await startContainer();
         debug('Container started');
         let allContainers: {
@@ -84,8 +88,6 @@ export const executeScenarioAndGetContainerStats = async ({
         if (typeof containers === 'string') {
             containers = containers.split(',');
         }
-
-        const allMilestones = [];
 
         allContainers = allContainers.concat(
             containers.map((container) => ({
@@ -132,12 +134,12 @@ export const executeScenarioAndGetContainerStats = async ({
 
             const stop = getPodsStats(nodes);
 
-            const { timelines, milestones } = await execScenarioContainer(scenario, url, {
+            const { timelines } = await execScenarioContainer(scenario, url, {
                 useAdblock,
                 ignoreHTTPSErrors,
+                timeout,
+                cypressConfigFile,
             });
-
-            allMilestones.push(milestones);
 
             allContainers = allContainers.map((container) => {
                 if (!container.stopContainerStats) {
@@ -179,7 +181,7 @@ export const executeScenarioAndGetContainerStats = async ({
         mergePodStatsWithNetworkStats(nodes, kubernetesResults);
         allContainers = [...allContainers, ...Object.values(kubernetesResults)];
         debug('Returning', allContainers.length);
-        return { allContainers, allMilestones };
+        return { allContainers };
     } catch (error) {
         debug('Error', error);
         throw error;

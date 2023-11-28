@@ -28,12 +28,12 @@ cd $HOME/.local/lib
 rm -rf greenframe
 rm -rf ~/.local/share/greenframe/client
 
-URL=https://assets.greenframe.io/channels/stable/greenframe-$OS-$ARCH.tar.gz
+URL=https://github.com/marmelab/greenframe-cli-cypress/releases/download/latest/greenframe-$OS-$ARCH.tar.gz
 TAR_ARGS="xz"
 
 echo "Installing CLI from $URL"
 if [ $(command -v curl) ]; then
-  curl "$URL" | tar "$TAR_ARGS"
+  curl -L "$URL" | tar "$TAR_ARGS"
 else
   wget -O- "$URL" | tar "$TAR_ARGS"
 fi

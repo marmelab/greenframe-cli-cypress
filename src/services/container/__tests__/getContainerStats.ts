@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@jest/globals';
+
 jest.mock('node:http', () => ({
     request: jest
         .fn()

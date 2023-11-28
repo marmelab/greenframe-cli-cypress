@@ -1,10 +1,5 @@
 import { ERROR_CODES, SCENARIO_STATUS } from '../constants';
-import {
-    getAverageMilestones,
-    getAverageStats,
-    getScenarioConsumption,
-    getStats,
-} from '../index';
+import { getAverageStats, getScenarioConsumption, getStats } from '../index';
 import { MetricsContainer, Milestone, ValueOf } from '../types';
 
 export type ScenarioResult = {
@@ -19,7 +14,6 @@ export type ScenarioResult = {
         stats: any[];
         score: MetricsContainer;
     }[];
-    milestones?: Milestone[];
     errorCode?: string;
     errorMessage?: string;
     executionCount?: number;
@@ -27,7 +21,6 @@ export type ScenarioResult = {
 
 export const computeScenarioResult = ({
     allContainersStats,
-    milestones,
     threshold,
     name,
     errorCode,
@@ -35,14 +28,13 @@ export const computeScenarioResult = ({
     executionCount,
 }: {
     allContainersStats?: Parameters<typeof getStats>[0];
-    milestones?: Milestone[][];
     threshold?: number;
     name: string;
     errorCode?: string;
     errorMessage?: string;
     executionCount?: number;
 }): ScenarioResult => {
-    if (!errorCode && allContainersStats && milestones) {
+    if (!errorCode && allContainersStats) {
         const stats = getStats(allContainersStats);
 
         const isMultiContainers = allContainersStats.length > 1;
@@ -54,8 +46,6 @@ export const computeScenarioResult = ({
 
         const isThresholdExceeded = threshold != null && totalScore.co2.total > threshold;
 
-        const averageMilestones = getAverageMilestones(milestones);
-
         return {
             name,
             threshold,
@@ -65,7 +55,6 @@ export const computeScenarioResult = ({
             errorCode: isThresholdExceeded ? ERROR_CODES.THRESHOLD_EXCEEDED : undefined,
             precision,
             score: totalScore,
-            milestones: averageMilestones,
             containers: allContainersStats.map((container) => ({
                 name: container.name,
                 type: container.type,

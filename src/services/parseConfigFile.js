@@ -44,6 +44,8 @@ const parseConfigFile = async (path) => {
                 dockerdHost,
                 dockerdPort,
                 ignoreHTTPSErrors,
+                cypressConfigFile,
+                timeout,
             } = fileContent;
 
             return {
@@ -68,6 +70,8 @@ const parseConfigFile = async (path) => {
                     dockerdHost,
                     dockerdPort,
                     ignoreHTTPSErrors,
+                    cypressConfigFile,
+                    timeout,
                 },
             };
         }
@@ -122,7 +126,7 @@ const resolveParams = (
     if (!args.scenarios) {
         args.scenarios = [
             {
-                path: '../../src/examples/visit.js',
+                path: './**/src/examples/visit-cypress.cy.ts',
                 name: 'main scenario',
                 threshold: flags.threshold,
             },

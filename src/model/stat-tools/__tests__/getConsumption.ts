@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { getStandardError } from '../getConsumption';
 
 describe('getStandardError', () => {
