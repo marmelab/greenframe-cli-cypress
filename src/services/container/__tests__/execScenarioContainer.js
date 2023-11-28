@@ -190,37 +190,6 @@ describe('#execScenarioContainer', () => {
         });
     });
 
-    it('Should call exec with useAdblocker', async () => {
-        exec.mockReturnValue({
-            stdout: `=====TIMELINES=====
-{"start": "START_DATE", "end": "END_DATE", "elapsed": "ELAPSED_TIME"}
-=====TIMELINES=====
-=====MILESTONES=====
-[{"title": "TITLE", "time": "TIME"}]
-=====MILESTONES=====
-            `,
-        });
-
-        const result = await execScenarioContainer(
-            'path_to_scenario',
-            'http://example.com',
-            { useAdblock: true }
-        );
-        expect(exec).toHaveBeenCalledTimes(1);
-        expect(exec).toHaveBeenCalledWith(
-            'docker exec greenframe-runner node /greenframe/dist/runner/index.js --scenario="path_to_scenario" --url="http%3A%2F%2Fexample.com" --useAdblock'
-        );
-
-        expect(result).toEqual({
-            milestones: [{ title: 'TITLE', time: 'TIME' }],
-            timelines: {
-                start: 'START_DATE',
-                end: 'END_DATE',
-                elapsed: 'ELAPSED_TIME',
-            },
-        });
-    });
-
     it('Should throw an error because exec throw an error', async () => {
         exec.mockReturnValue({
             stdout: `=====TIMELINES=====

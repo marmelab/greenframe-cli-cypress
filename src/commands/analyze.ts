@@ -57,7 +57,6 @@ class AnalyzeCommand extends Command {
     static defaultFlags = {
         configFile: DEFAULT_CONFIG_FILE,
         samples: DEFAULT_SAMPLES,
-        useAdblock: false,
         ignoreHTTPSErrors: false,
     };
 
@@ -95,14 +94,10 @@ class AnalyzeCommand extends Command {
             char: 's',
             description: 'Number of runs done for the score computation',
         }),
-        useAdblock: Flags.boolean({
-            char: 'a',
-            description: 'Use an adblocker during analysis',
-        }),
-        ignoreHTTPSErrors: Flags.boolean({
-            char: 'i',
-            description: 'Ignore HTTPS errors during analysis',
-        }),
+        // ignoreHTTPSErrors: Flags.boolean({
+        //     char: 'i',
+        //     description: 'Ignore HTTPS errors during analysis',
+        // }),
         locale: Flags.boolean({
             description: 'Set greenframe browser locale',
         }),

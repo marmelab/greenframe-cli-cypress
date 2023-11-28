@@ -23,7 +23,6 @@ export default async (ctx: any) => {
                     scenario: scenario.path,
                     url: args.baseURL,
                     samples: flags.samples,
-                    useAdblock: flags.useAdblock,
                     containers: flags.containers,
                     databaseContainers: flags.databaseContainers,
                     kubeContainers: flags.kubeContainers,

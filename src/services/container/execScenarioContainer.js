@@ -52,16 +52,12 @@ const startContainer = async () => {
 const execScenarioContainer = async (
     scenario,
     url,
-    { useAdblock, ignoreHTTPSErrors, locale, timezoneId } = {}
+    { ignoreHTTPSErrors, locale, timezoneId, timeout, cypressConfigFile } = {}
 ) => {
     try {
         let command = `docker exec ${CONTAINER_DEVICE_NAME} node /greenframe/dist/runner/index.js --scenario="${encodeURIComponent(
             scenario
         )}" --url="${encodeURIComponent(url)}"`;
-
-        if (useAdblock) {
-            command += ` --useAdblock`;
-        }
 
         if (ignoreHTTPSErrors) {
             command += ` --ignoreHTTPSErrors`;
