@@ -29,13 +29,12 @@ build: clean-dist ## Create tarballs of CLI
 rename-tarballs: ## Rename tarballs
 	for target in $(shell echo $(DEPLOY_TARGETS) | tr ',' ' '); do \
 		mv ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-$$target.tar.gz ./dist/greenframe-$$target.tar.gz; \
+		mv ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-$$target.tar.xz ./dist/greenframe-$$target.tar.xz; \
 	done
 
 generate-wsl-cli: ## Generate WSL version of CLI
 	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64.tar.gz ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64.tar.gz
 	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64.tar.xz ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64.tar.xz
-	cp ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-linux-x64-buildmanifest ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64-buildmanifest
-	sed -i 's/linux/wsl/g' ./dist/greenframe-v$(PACKAGE_VERSION)-$(SHORT_HASH)-wsl-x64-buildmanifest
 	${MAKE} rename-tarballs
 
 test: test-unit test-e2e ## Launch all tests
