@@ -44,8 +44,6 @@ const parseConfigFile = async (path) => {
                 dockerdHost,
                 dockerdPort,
                 ignoreHTTPSErrors,
-                locale,
-                timezoneId,
             } = fileContent;
 
             return {
@@ -70,8 +68,6 @@ const parseConfigFile = async (path) => {
                     dockerdHost,
                     dockerdPort,
                     ignoreHTTPSErrors,
-                    locale,
-                    timezoneId,
                 },
             };
         }

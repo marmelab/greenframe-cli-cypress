@@ -103,12 +103,6 @@ class AnalyzeCommand extends Command {
             char: 'i',
             description: 'Ignore HTTPS errors during analysis',
         }),
-        locale: Flags.boolean({
-            description: 'Set greenframe browser locale',
-        }),
-        timezoneId: Flags.boolean({
-            description: 'Set greenframe browser timezoneId',
-        }),
         envVar: Flags.string({
             char: 'e',
             description: 'List of environment vars to read in the scenarios',

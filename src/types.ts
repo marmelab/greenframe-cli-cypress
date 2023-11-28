@@ -15,8 +15,6 @@ export type Analysis = {
     samples: any[];
     useAdblock: boolean;
     ignoreHTTPSErrors: boolean;
-    locale: string;
-    timezoneId: string;
     projectName: string;
     gitInfos: {
         branchName: string;

@@ -38,12 +38,6 @@ class OpenCommand extends Command {
         ignoreHTTPSErrors: Flags.boolean({
             description: 'Ignore HTTPS errors during analysis',
         }),
-        locale: Flags.boolean({
-            description: 'Set greenframe browser locale',
-        }),
-        timezoneId: Flags.boolean({
-            description: 'Set greenframe browser timezoneId',
-        }),
     };
 
     async run() {
@@ -73,8 +67,6 @@ class OpenCommand extends Command {
                     useAdblock: flags.useAdblock,
                     extraHosts: args.extraHosts,
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                    locale: flags.locale,
-                    timezoneId: flags.timezoneId,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${
