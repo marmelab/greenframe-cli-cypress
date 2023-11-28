@@ -153,37 +153,6 @@ describe('#execScenarioContainer', () => {
         );
 
         expect(result).toEqual({
-            milestones: [],
-            timelines: {
-                start: 'START_DATE',
-                end: 'END_DATE',
-                elapsed: 'ELAPSED_TIME',
-            },
-        });
-    });
-
-    it('Should call exec with good command and also return milestones if provided', async () => {
-        exec.mockReturnValue({
-            stdout: `=====TIMELINES=====
-{"start": "START_DATE", "end": "END_DATE", "elapsed": "ELAPSED_TIME"}
-=====TIMELINES=====
-=====MILESTONES=====
-[{"title": "TITLE", "time": "TIME"}]
-=====MILESTONES=====
-            `,
-        });
-
-        const result = await execScenarioContainer(
-            'path_to_scenario',
-            'http://example.com'
-        );
-        expect(exec).toHaveBeenCalledTimes(1);
-        expect(exec).toHaveBeenCalledWith(
-            'docker exec greenframe-runner node /greenframe/dist/runner/index.js --scenario="path_to_scenario" --url="http%3A%2F%2Fexample.com"'
-        );
-
-        expect(result).toEqual({
-            milestones: [{ title: 'TITLE', time: 'TIME' }],
             timelines: {
                 start: 'START_DATE',
                 end: 'END_DATE',
@@ -197,9 +166,6 @@ describe('#execScenarioContainer', () => {
             stdout: `=====TIMELINES=====
 {"start": "START_DATE", "end": "END_DATE", "elapsed": "ELAPSED_TIME"}
 =====TIMELINES=====
-=====MILESTONES=====
-[{"title": "TITLE", "time": "TIME"}]
-=====MILESTONES=====
             `,
         });
 
@@ -214,7 +180,6 @@ describe('#execScenarioContainer', () => {
         );
 
         expect(result).toEqual({
-            milestones: [{ title: 'TITLE', time: 'TIME' }],
             timelines: {
                 start: 'START_DATE',
                 end: 'END_DATE',

@@ -20,7 +20,7 @@ const getFilePath = (file) => {
     const args = minimist(process.argv.slice(2));
     const scenarioPath = getFilePath(args.scenario);
     const cypressConfigFile = getFilePath(args.cypressConfigFile);
-    const { timelines, milestones } = await executeScenario(scenarioPath, {
+    const { timelines } = await executeScenario(scenarioPath, {
         debug: false,
         baseUrl: decodeURIComponent(args.url),
         hostIP: process.env.HOSTIP,
@@ -35,7 +35,4 @@ const getFilePath = (file) => {
     console.log('=====TIMELINES=====');
     console.log(JSON.stringify(timelines));
     console.log('=====TIMELINES=====');
-    console.log('=====MILESTONES=====');
-    console.log(JSON.stringify(milestones));
-    console.log('=====MILESTONES=====');
 })();

@@ -93,8 +93,6 @@ export const executeScenarioAndGetContainerStats = async ({
             containers = containers.split(',');
         }
 
-        const allMilestones = [];
-
         allContainers = allContainers.concat(
             containers.map((container) => ({
                 name: container,
@@ -140,7 +138,7 @@ export const executeScenarioAndGetContainerStats = async ({
 
             const stop = getPodsStats(nodes);
 
-            const { timelines, milestones } = await execScenarioContainer(scenario, url, {
+            const { timelines } = await execScenarioContainer(scenario, url, {
                 useAdblock,
                 ignoreHTTPSErrors,
                 locale,
@@ -148,8 +146,6 @@ export const executeScenarioAndGetContainerStats = async ({
                 timeout,
                 cypressConfigFile,
             });
-
-            allMilestones.push(milestones);
 
             allContainers = allContainers.map((container) => {
                 if (!container.stopContainerStats) {
@@ -191,7 +187,7 @@ export const executeScenarioAndGetContainerStats = async ({
         mergePodStatsWithNetworkStats(nodes, kubernetesResults);
         allContainers = [...allContainers, ...Object.values(kubernetesResults)];
         debug('Returning', allContainers.length);
-        return { allContainers, allMilestones };
+        return { allContainers };
     } catch (error) {
         debug('Error', error);
         throw error;

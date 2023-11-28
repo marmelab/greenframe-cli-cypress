@@ -18,31 +18,29 @@ export default async (ctx: any) => {
         debug(`Running scenario ${scenario.path}...`);
 
         try {
-            const { allContainers, allMilestones } =
-                await executeScenarioAndGetContainerStats({
-                    scenario: scenario.path,
-                    url: args.baseURL,
-                    samples: flags.samples,
-                    useAdblock: flags.useAdblock,
-                    containers: flags.containers,
-                    databaseContainers: flags.databaseContainers,
-                    kubeContainers: flags.kubeContainers,
-                    kubeDatabaseContainers: flags.kubeDatabaseContainers,
-                    extraHosts: flags.extraHosts,
-                    envVars: flags.envVar,
-                    envFile: flags.envFile,
-                    dockerdHost: flags.dockerdHost,
-                    dockerdPort: flags.dockerdPort,
-                    ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                    locale: flags.locale,
-                    timezoneId: flags.timezoneId,
-                    timeout: flags.timeout,
-                    cypressConfigFile: flags.cypressConfigFile,
-                });
+            const { allContainers } = await executeScenarioAndGetContainerStats({
+                scenario: scenario.path,
+                url: args.baseURL,
+                samples: flags.samples,
+                useAdblock: flags.useAdblock,
+                containers: flags.containers,
+                databaseContainers: flags.databaseContainers,
+                kubeContainers: flags.kubeContainers,
+                kubeDatabaseContainers: flags.kubeDatabaseContainers,
+                extraHosts: flags.extraHosts,
+                envVars: flags.envVar,
+                envFile: flags.envFile,
+                dockerdHost: flags.dockerdHost,
+                dockerdPort: flags.dockerdPort,
+                ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
+                locale: flags.locale,
+                timezoneId: flags.timezoneId,
+                timeout: flags.timeout,
+                cypressConfigFile: flags.cypressConfigFile,
+            });
 
             const data = computeScenarioResult({
                 allContainersStats: allContainers,
-                milestones: allMilestones,
                 threshold: scenario.threshold,
                 name: scenario.name,
                 executionCount: scenario.executionCount,
