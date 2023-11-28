@@ -135,6 +135,7 @@ jobs:
               with:
                 repo_token: "${{ secrets.GITHUB_TOKEN }}"
                 automatic_release_tag: "staging"
+                title: "Staging Release"
                 prerelease: true
                 files: |
                   dist/*.tar.gz
