@@ -1,3 +1,5 @@
+const { describe, expect, test } = require('@jest/globals');
+
 jest.mock('node:fs', () => {
     return {
         readFile: jest.fn().mockReturnValue('content file'),

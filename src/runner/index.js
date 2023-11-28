@@ -2,32 +2,36 @@ const minimist = require('minimist');
 
 const executeScenario = require('./scenarioWrapper');
 
-const getScenarioPath = (scenario) => {
-    const scenarioPath = decodeURIComponent(scenario);
-
-    if (scenarioPath.startsWith('./')) {
-        return scenarioPath.replace('.', '/scenarios');
+const getFilePath = (file) => {
+    if (!file) {
+        return;
     }
 
-    return scenarioPath;
+    const filePath = decodeURIComponent(file);
+
+    if (filePath.startsWith('./')) {
+        return filePath.replace('.', '/scenarios');
+    }
+
+    return filePath;
 };
 
 (async () => {
     const args = minimist(process.argv.slice(2));
-    const scenarioPath = getScenarioPath(args.scenario);
-    const scenarioFileContent = require(scenarioPath);
-    const { timelines, milestones } = await executeScenario(scenarioFileContent, {
+    const scenarioPath = getFilePath(args.scenario);
+    const cypressConfigFile = getFilePath(args.cypressConfigFile);
+    const { timelines } = await executeScenario(scenarioPath, {
+        debug: false,
         baseUrl: decodeURIComponent(args.url),
         hostIP: process.env.HOSTIP,
         extraHosts: process.env.EXTRA_HOSTS ? process.env.EXTRA_HOSTS.split(',') : [],
         ignoreHTTPSErrors: args.ignoreHTTPSErrors,
         locale: args.locale,
         timezoneId: args.timezoneId,
+        timeout: args.timeout,
+        cypressConfigFile: cypressConfigFile,
     });
     console.log('=====TIMELINES=====');
     console.log(JSON.stringify(timelines));
     console.log('=====TIMELINES=====');
-    console.log('=====MILESTONES=====');
-    console.log(JSON.stringify(milestones));
-    console.log('=====MILESTONES=====');
 })();

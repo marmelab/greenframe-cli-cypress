@@ -239,7 +239,7 @@ USAGE
   $ greenframe analyze [BASEURL] [SCENARIO] [-C <value>] [-K <value>] [-t <value>] [-p <value>] [-c <value>]
     [--commitId <value>] [-b <value>] [-s <value>] [-a] [-i] [--locale] [--timezoneId] [-e <value>] [-E <value>]
     [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
-    [--kubeContainers <value>] [--kubeDatabaseContainers <value>]
+    [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -259,19 +259,21 @@ FLAGS
   -t, --threshold=<value>           Consumption threshold
   --commitId=<value>                Pass commit id manually
   --containers=<value>              Pass containers manually
+  --cypressConfigFile=<value>       Path to custom cypress config file
   --databaseContainers=<value>      Pass database containers manually
   --dockerdHost=<value>             Docker daemon host
   --dockerdPort=<value>             Docker daemon port
   --kubeContainers=<value>          Pass kubebernetes containers manually
   --kubeDatabaseContainers=<value>  Pass kubebernetes database containers manually
   --locale                          Set greenframe browser locale
+  --timeout=<value>                 Timeout for scenario run in ms
   --timezoneId                      Set greenframe browser timezoneId
 
 DESCRIPTION
   Create an analysis on GreenFrame server.
 ```
 
-_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli/blob/v1.7.0/dist/commands/analyze.ts)_
+_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/analyze.ts)_
 
 ## `greenframe kube-config`
 
@@ -292,7 +294,7 @@ DESCRIPTION
   greenframe kube-config
 ```
 
-_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli/blob/v1.7.0/dist/commands/kube-config.ts)_
+_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/kube-config.ts)_
 
 ## `greenframe open [BASEURL] [SCENARIO]`
 
@@ -319,7 +321,7 @@ DESCRIPTION
   greenframe analyze ./yourScenario.js https://greenframe.io
 ```
 
-_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli/blob/v1.7.0/dist/commands/open.ts)_
+_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/open.ts)_
 
 ## `greenframe update [CHANNEL]`
 
@@ -338,7 +340,7 @@ DESCRIPTION
   greenframe update
 ```
 
-_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli/blob/v1.7.0/dist/commands/update.ts)_
+_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/update.ts)_
 <!-- commandsstop -->
 
 ## Development
