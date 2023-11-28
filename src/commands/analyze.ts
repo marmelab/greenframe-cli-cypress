@@ -94,10 +94,10 @@ class AnalyzeCommand extends Command {
             char: 's',
             description: 'Number of runs done for the score computation',
         }),
-        // ignoreHTTPSErrors: Flags.boolean({
-        //     char: 'i',
-        //     description: 'Ignore HTTPS errors during analysis',
-        // }),
+        ignoreHTTPSErrors: Flags.boolean({
+            char: 'i',
+            description: 'Ignore HTTPS errors during analysis',
+        }),
         locale: Flags.boolean({
             description: 'Set greenframe browser locale',
         }),
