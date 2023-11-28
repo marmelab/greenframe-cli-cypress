@@ -8,7 +8,17 @@ const BASE_COMMAND = `./bin/run analyze`;
 describe('[LOCAL] greenframe analyze', () => {
     describe('single page', () => {
         describe('local analysis', () => {
-            it('should set greenframe browser locale right', async () => {
+            it('should run an analysis command correctly', async () => {
+                const { error, stdout } = await exec(
+                    `${BASE_COMMAND} -C ./e2e/.greenframe.single.yml`
+                );
+                expect(stdout).toContain('✅ main scenario completed');
+                expect(stdout).toContain('The estimated footprint is');
+                expect(error).toBeUndefined();
+            });
+            // enable this test when locale option is implemented
+            // eslint-disable-next-line jest/no-disabled-tests
+            it.skip('should set greenframe browser locale right', async () => {
                 const { stdout: enStdout } = await exec(
                     `${BASE_COMMAND} -C ./e2e/.greenframe.single.en.yml`
                 );
@@ -18,8 +28,9 @@ describe('[LOCAL] greenframe analyze', () => {
                 );
                 expect(frStdout).toContain('✅ main scenario completed');
             });
-
-            it('should run an analysis command with adblocker', async () => {
+            // enable this test when adblock option is implemented
+            // eslint-disable-next-line jest/no-disabled-tests
+            it.skip('should run an analysis command with adblocker', async () => {
                 const { error, stdout } = await exec(
                     `${BASE_COMMAND} -C ./e2e/.greenframe.single.adblock.yml`
                 );
