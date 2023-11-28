@@ -1,3 +1,4 @@
+import { expect, test } from '@jest/globals';
 import type { CadvisorContainerStats } from '../../../../types';
 import { kubernetes } from '../kubernetes';
 

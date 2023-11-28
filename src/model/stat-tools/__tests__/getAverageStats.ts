@@ -1,5 +1,5 @@
-import { getAverageStats } from '../getAverageStats';
-import { addAvg, incrementalAverageStats } from '../getAverageStats';
+import { describe, expect, it } from '@jest/globals';
+import { addAvg, getAverageStats, incrementalAverageStats } from '../getAverageStats';
 
 const incrementalStat = (n: any, statValue: any, boolValue: any) => {
     return {
@@ -38,7 +38,7 @@ const inputStat = (sample: any, statValue: any) => {
         ...incrementalStat(0, statValue, true),
         meta: {
             sample: sample,
-            container: 'playwright',
+            container: 'cypress',
         },
     };
 };
@@ -140,7 +140,7 @@ describe('Unit test util functions', () => {
             },
             meta: {
                 sample: 0,
-                container: 'playwright',
+                container: 'cypress',
             },
         });
         expect(inputStat(1, 8.2)).toEqual({
@@ -173,7 +173,7 @@ describe('Unit test util functions', () => {
             },
             meta: {
                 sample: 1,
-                container: 'playwright',
+                container: 'cypress',
             },
         });
     });
@@ -269,7 +269,7 @@ describe('incrementalAverageStats', () => {
         /*
         Entry data
             Entries: [50, 10, 30, 50, 60]
-        
+
         Expected output
             Incremental average: [50, 30, 30, 35, 40]
         */

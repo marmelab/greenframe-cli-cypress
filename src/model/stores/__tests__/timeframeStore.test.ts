@@ -1,3 +1,4 @@
+import { expect, test } from '@jest/globals';
 import type { TimeFrameWithMeta } from '../../../types';
 import type { TimeFrameStore } from '../timeframeStore';
 import { createTimeFrameStore, getTitles } from '../timeframeStore';
@@ -52,6 +53,6 @@ test.each<[ReturnType<typeof getTitles>]>([
             'title 1 1 - milestone 3',
         ],
     ],
-])('getTitles %#', (result) => {
+])('getTitles %#', (result: Iterable<unknown>) => {
     expect(new Set(getTitles(store))).toEqual(new Set(result));
 });

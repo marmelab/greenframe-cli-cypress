@@ -1,4 +1,5 @@
 const { resolveParams } = require('../parseConfigFile');
+const { describe, test, expect } = require('@jest/globals');
 
 describe('#resolveParams', () => {
     test('Should return flags default values', () => {

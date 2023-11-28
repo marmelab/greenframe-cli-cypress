@@ -1,3 +1,5 @@
+const { describe, expect, it } = require('@jest/globals');
+
 jest.mock('node:child_process', () => ({
     exec: jest.fn(),
 }));
