@@ -39,27 +39,12 @@ const getScopedPage = (page: Page, baseUrl: string) => {
             }
         });
 
-    function addMilestone(this: Page, title: string) {
-        if (this._milestones.some((m) => m.title === title)) {
-            throw new Error(`Milestone "${title}" already exists`);
-        }
-
-        this._milestones.push({ title, timestamp: Date.now() });
-        return this;
-    }
-
-    function getMilestones(this: Page) {
-        return this._milestones;
-    }
-
     const resolveURL = (path = '') => {
         const url = new URL(path, baseUrl);
         return url.toString();
     };
 
     const scopedPage = page as Page;
-
-    scopedPage._milestones = [];
 
     const originalGoTo = page.goto.bind(scopedPage);
     const originalWaitForNavigation = page.waitForNavigation.bind(scopedPage);
@@ -87,12 +72,9 @@ const getScopedPage = (page: Page, baseUrl: string) => {
     scopedPage.waitForNetworkIdle = waitForNetworkIdle;
     scopedPage.scrollToElement = scrollToElement;
     scopedPage.scrollByDistance = scrollByDistance;
-    scopedPage.addMilestone = addMilestone;
     scopedPage.scrollToEnd = scrollToEnd;
 
     // Internal Greenframe API
-
-    scopedPage.getMilestones = getMilestones;
 
     return scopedPage;
 };

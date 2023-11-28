@@ -82,9 +82,8 @@ const execScenarioContainer = async (
         }
 
         const timelines = JSON.parse(stdout.split('=====TIMELINES=====')[1]);
-        const milestones = JSON.parse(stdout.split('=====MILESTONES=====')[1] || '[]');
 
-        return { timelines, milestones };
+        return { timelines };
     } catch (error) {
         throw new ScenarioError(error.stderr || error.message);
     }

@@ -6,12 +6,6 @@ const fetch = require('cross-fetch'); // required 'fetch'
 
 const SCENARIO_TIMEOUT = 2 * 60 * 1000; // Global timeout for executing a scenario
 
-const relativizeMilestoneSamples = (milestones, startTime) =>
-    milestones.map(({ timestamp, ...milestone }) => ({
-        ...milestone,
-        time: timestamp - startTime,
-    }));
-
 const executeScenario = async (scenario, options = {}) => {
     let args = ['--disable-web-security'];
 
@@ -79,7 +73,6 @@ const executeScenario = async (scenario, options = {}) => {
             start: start.toISOString(),
             end: end.toISOString(),
         },
-        milestones: relativizeMilestoneSamples(page.getMilestones(), start.getTime()),
     };
 };
 
