@@ -210,11 +210,10 @@ This means that the lowest hanging fruit for optimizing the emissions of a web p
 # Commands
 
 <!-- commands -->
-
--   [`greenframe analyze [BASEURL] [SCENARIO]`](#greenframe-analyze-baseurl-scenario)
--   [`greenframe kube-config`](#greenframe-kube-config)
--   [`greenframe open [BASEURL] [SCENARIO]`](#greenframe-open-baseurl-scenario)
--   [`greenframe update [CHANNEL]`](#greenframe-update-channel)
+* [`greenframe analyze [BASEURL] [SCENARIO]`](#greenframe-analyze-baseurl-scenario)
+* [`greenframe kube-config`](#greenframe-kube-config)
+* [`greenframe open [BASEURL] [SCENARIO]`](#greenframe-open-baseurl-scenario)
+* [`greenframe update [CHANNEL]`](#greenframe-update-channel)
 
 ## `greenframe analyze [BASEURL] [SCENARIO]`
 
@@ -223,9 +222,9 @@ Create an analysis on GreenFrame server.
 ```
 USAGE
   $ greenframe analyze [BASEURL] [SCENARIO] [-C <value>] [-K <value>] [-t <value>] [-p <value>] [-c <value>]
-    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>]
-    [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
-    [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
+    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>] [--dockerdHost <value>] [--dockerdPort
+    <value>] [--containers <value>] [--databaseContainers <value>] [--kubeContainers <value>] [--kubeDatabaseContainers
+    <value>] [--timeout <value>] [--cypressConfigFile <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
