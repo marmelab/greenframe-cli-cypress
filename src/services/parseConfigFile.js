@@ -30,7 +30,6 @@ const parseConfigFile = async (path) => {
                 scenarios,
                 baseURL,
                 samples,
-                useAdblock,
                 threshold,
                 projectName,
                 containers,
@@ -56,7 +55,6 @@ const parseConfigFile = async (path) => {
                 },
                 flags: {
                     samples,
-                    useAdblock,
                     threshold,
                     projectName,
                     containers,

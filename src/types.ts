@@ -13,7 +13,6 @@ export type Analysis = {
     baseURL: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     samples: any[];
-    useAdblock: boolean;
     ignoreHTTPSErrors: boolean;
     projectName: string;
     gitInfos: {

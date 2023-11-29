@@ -10,7 +10,6 @@ const createNewAnalysis = async (ctx) => {
             baseURL: args.baseURL,
             threshold: flags.threshold,
             samples: flags.samples,
-            useAdblock: flags.useAdblock,
             ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
             projectName: ctx.projectName,
             gitInfos: ctx.gitInfos,

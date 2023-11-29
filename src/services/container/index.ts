@@ -34,7 +34,6 @@ export const executeScenarioAndGetContainerStats = async ({
     scenario,
     url,
     samples = DEFAULT_SAMPLES,
-    useAdblock,
     ignoreHTTPSErrors,
     containers = [],
     databaseContainers = [],
@@ -51,7 +50,6 @@ export const executeScenarioAndGetContainerStats = async ({
     scenario: string;
     url: string;
     samples?: number;
-    useAdblock?: boolean;
     ignoreHTTPSErrors?: boolean;
     containers?: string[] | string;
     databaseContainers?: string[] | string;
@@ -135,7 +133,6 @@ export const executeScenarioAndGetContainerStats = async ({
             const stop = getPodsStats(nodes);
 
             const { timelines } = await execScenarioContainer(scenario, url, {
-                useAdblock,
                 ignoreHTTPSErrors,
                 timeout,
                 cypressConfigFile,
