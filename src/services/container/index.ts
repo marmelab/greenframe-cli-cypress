@@ -34,7 +34,6 @@ export const executeScenarioAndGetContainerStats = async ({
     scenario,
     url,
     samples = DEFAULT_SAMPLES,
-    useAdblock,
     ignoreHTTPSErrors,
     locale,
     timezoneId,
@@ -53,7 +52,6 @@ export const executeScenarioAndGetContainerStats = async ({
     scenario: string;
     url: string;
     samples?: number;
-    useAdblock?: boolean;
     ignoreHTTPSErrors?: boolean;
     locale?: string;
     timezoneId?: string;
@@ -139,7 +137,6 @@ export const executeScenarioAndGetContainerStats = async ({
             const stop = getPodsStats(nodes);
 
             const { timelines } = await execScenarioContainer(scenario, url, {
-                useAdblock,
                 ignoreHTTPSErrors,
                 locale,
                 timezoneId,

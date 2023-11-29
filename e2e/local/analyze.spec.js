@@ -28,16 +28,6 @@ describe('[LOCAL] greenframe analyze', () => {
                 );
                 expect(frStdout).toContain('✅ main scenario completed');
             });
-            // enable this test when adblock option is implemented
-            // eslint-disable-next-line jest/no-disabled-tests
-            it.skip('should run an analysis command with adblocker', async () => {
-                const { error, stdout } = await exec(
-                    `${BASE_COMMAND} -C ./e2e/.greenframe.single.adblock.yml`
-                );
-                expect(stdout).toContain('✅ main scenario completed');
-                expect(stdout).toContain('The estimated footprint is');
-                expect(error).toBeUndefined();
-            });
         });
     });
 
