@@ -32,7 +32,7 @@ The estimated footprint is 0.038 g eq. co2 ± 1.3% (0.085 Wh).
 To install GreenFrame CLI, type the following command in your favorite terminal:
 
 ```
-curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/install.sh | bash
+curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/latest/download/install.sh | bash
 ```
 
 To verify that GreenFrame CLI has correctly been installed, type:

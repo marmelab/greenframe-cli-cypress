@@ -145,7 +145,6 @@ jobs:
               if: ${{ github.ref == 'refs/heads/production' }}
               with:
                 repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                automatic_release_tag: "stable"
                 prerelease: false
                 files: |
                   dist/*.tar.gz

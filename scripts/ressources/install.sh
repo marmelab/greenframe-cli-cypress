@@ -28,7 +28,7 @@ cd $HOME/.local/lib
 rm -rf greenframe
 rm -rf ~/.local/share/greenframe/client
 
-URL=https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/greenframe-$OS-$ARCH.tar.gz
+URL=https://github.com/marmelab/greenframe-cli-cypress/releases/latest/download/greenframe-$OS-$ARCH.tar.gz
 TAR_ARGS="xz"
 
 echo "Installing CLI from $URL"
