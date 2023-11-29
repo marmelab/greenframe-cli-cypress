@@ -32,14 +32,14 @@ The estimated footprint is 0.038 g eq. co2 ± 1.3% (0.085 Wh).
 To install GreenFrame CLI, type the following command in your favorite terminal:
 
 ```
-curl https://assets.greenframe.io/install.sh | bash
+curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/install.sh | bash
 ```
 
 To verify that GreenFrame CLI has correctly been installed, type:
 
 ```
 $ greenframe -v
-enterprise-cli/1.5.0 linux-x64 node-v16.14.0
+enterprise-cli-cypress/1.0.0 linux-x64 node-v16.14.0
 ```
 
 # Usage
@@ -54,17 +54,17 @@ You can run a custom scenario instead of the "visit" scenario by passing a scena
 $ greenframe analyze https://marmelab.com ./my-scenario.js
 ```
 
-GreenFrame uses [PlayWright](https://playwright.dev/) to run scenarios. To discover what a custom PlayWright scenario looks alike, you can refer to our [documentation](https://docs.greenframe.io/scenario/).
+GreenFrame uses [Cypress](https://www.cypress.io/) to run scenarios. To discover what a custom Cypress scenario looks alike, you can refer to our [documentation](https://docs.greenframe.io/scenario/).
 
-Check [the PlayWright documentation on writing tests](https://playwright.dev/docs/writing-tests) for more information.
+Check [the Cypress documentation on writing tests](https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test) for more information.
 
-You can test your scenario using the `greenframe open` command. It uses the local Chrome browser to run the scenario:
+You can test your scenario using the `greenframe open` command. It opens Cypress to run the scenario:
 
 ```
 $ greenframe open https://marmelab.com ./my-scenario.js
 ```
 
-You can write scenarios by hand, or use [the PlayWright Test Generator](https://playwright.dev/docs/codegen) to generate a scenario based on a user session.
+You can write scenarios by hand, or use [the Cypress Studio](https://docs.cypress.io/guides/references/cypress-studio) to generate a scenario based on a user session.
 
 ## Full-Stack Analysis
 
