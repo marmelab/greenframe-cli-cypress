@@ -21,6 +21,9 @@ ARCH="$(uname -m)"
 if [ "$ARCH" == "x86_64" ]; then
   ARCH=x64
 fi
+if [ "$ARCH" == "aarch64" ]; then
+  ARCH=arm64
+fi
 
 mkdir -p $HOME/.local/bin
 mkdir -p $HOME/.local/lib
@@ -28,7 +31,7 @@ cd $HOME/.local/lib
 rm -rf greenframe
 rm -rf ~/.local/share/greenframe/client
 
-URL=https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/greenframe-$OS-$ARCH.tar.gz
+URL=https://github.com/marmelab/greenframe-cli-cypress/releases/latest/download/greenframe-$OS-$ARCH.tar.gz
 TAR_ARGS="xz"
 
 echo "Installing CLI from $URL"

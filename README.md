@@ -32,7 +32,7 @@ The estimated footprint is 0.038 g eq. co2 ± 1.3% (0.085 Wh).
 To install GreenFrame CLI, type the following command in your favorite terminal:
 
 ```
-curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/install.sh | bash
+curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/latest/download/install.sh | bash
 ```
 
 To verify that GreenFrame CLI has correctly been installed, type:
@@ -255,7 +255,7 @@ DESCRIPTION
   Create an analysis on GreenFrame server.
 ```
 
-_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.2/dist/commands/analyze.ts)_
+_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.3/dist/commands/analyze.ts)_
 
 ## `greenframe kube-config`
 
@@ -276,7 +276,7 @@ DESCRIPTION
   greenframe kube-config
 ```
 
-_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.2/dist/commands/kube-config.ts)_
+_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.3/dist/commands/kube-config.ts)_
 
 ## `greenframe open [BASEURL] [SCENARIO]`
 
@@ -300,7 +300,7 @@ DESCRIPTION
   greenframe analyze ./yourScenario.js https://greenframe.io
 ```
 
-_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.2/dist/commands/open.ts)_
+_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.3/dist/commands/open.ts)_
 
 ## `greenframe update [CHANNEL]`
 
@@ -319,7 +319,7 @@ DESCRIPTION
   greenframe update
 ```
 
-_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.2/dist/commands/update.ts)_
+_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.3/dist/commands/update.ts)_
 <!-- commandsstop -->
 
 ## Development
