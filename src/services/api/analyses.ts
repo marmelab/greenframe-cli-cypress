@@ -12,8 +12,6 @@ export const createAnalysis = async ({
     samples,
     projectName,
     gitInfos,
-    locale,
-    timezoneId,
     ignoreHTTPSErrors,
 }: Analysis) => {
     const { commitMessage, branchName, commitId, defaultBranchCommitReference } =
@@ -29,8 +27,6 @@ export const createAnalysis = async ({
         gitBranchName: branchName,
         gitCommitId: commitId,
         gitDefaultBranchCommitReference: defaultBranchCommitReference,
-        locale,
-        timezoneId,
         ignoreHTTPSErrors,
     });
 };

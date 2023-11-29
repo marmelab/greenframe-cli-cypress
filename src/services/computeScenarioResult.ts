@@ -1,6 +1,6 @@
 import { ERROR_CODES, SCENARIO_STATUS } from '../constants';
 import { getAverageStats, getScenarioConsumption, getStats } from '../index';
-import { MetricsContainer, Milestone, ValueOf } from '../types';
+import { MetricsContainer, ValueOf } from '../types';
 
 export type ScenarioResult = {
     name: string;

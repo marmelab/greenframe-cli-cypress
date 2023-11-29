@@ -63,7 +63,7 @@ const startContainer = async () => {
 const execScenarioContainer = async (
     scenario,
     url,
-    { ignoreHTTPSErrors, locale, timezoneId, timeout, cypressConfigFile } = {}
+    { ignoreHTTPSErrors, timeout, cypressConfigFile } = {}
 ) => {
     try {
         let command = `docker exec ${CONTAINER_DEVICE_NAME} node /greenframe/dist/runner/index.js --scenario="${encodeURIComponent(
@@ -72,14 +72,6 @@ const execScenarioContainer = async (
 
         if (ignoreHTTPSErrors) {
             command += ` --ignoreHTTPSErrors`;
-        }
-
-        if (locale) {
-            command += ` --locale=${locale}`;
-        }
-
-        if (timezoneId) {
-            command += ` --timezoneId=${timezoneId}`;
         }
 
         if (timeout) {

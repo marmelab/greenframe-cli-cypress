@@ -10,8 +10,6 @@ const createNewAnalysis = async (ctx) => {
             baseURL: args.baseURL,
             threshold: flags.threshold,
             samples: flags.samples,
-            locale: flags.locale,
-            timezoneId: flags.timezoneId,
             ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
             projectName: ctx.projectName,
             gitInfos: ctx.gitInfos,

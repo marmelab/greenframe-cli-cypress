@@ -43,8 +43,6 @@ const parseConfigFile = async (path) => {
                 dockerdHost,
                 dockerdPort,
                 ignoreHTTPSErrors,
-                locale,
-                timezoneId,
                 cypressConfigFile,
                 timeout,
             } = fileContent;
@@ -70,8 +68,6 @@ const parseConfigFile = async (path) => {
                     dockerdHost,
                     dockerdPort,
                     ignoreHTTPSErrors,
-                    locale,
-                    timezoneId,
                     cypressConfigFile,
                     timeout,
                 },

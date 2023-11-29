@@ -35,8 +35,6 @@ export const executeScenarioAndGetContainerStats = async ({
     url,
     samples = DEFAULT_SAMPLES,
     ignoreHTTPSErrors,
-    locale,
-    timezoneId,
     containers = [],
     databaseContainers = [],
     kubeContainers = [],
@@ -53,8 +51,6 @@ export const executeScenarioAndGetContainerStats = async ({
     url: string;
     samples?: number;
     ignoreHTTPSErrors?: boolean;
-    locale?: string;
-    timezoneId?: string;
     containers?: string[] | string;
     databaseContainers?: string[] | string;
     kubeContainers?: string[];
@@ -138,8 +134,6 @@ export const executeScenarioAndGetContainerStats = async ({
 
             const { timelines } = await execScenarioContainer(scenario, url, {
                 ignoreHTTPSErrors,
-                locale,
-                timezoneId,
                 timeout,
                 cypressConfigFile,
             });

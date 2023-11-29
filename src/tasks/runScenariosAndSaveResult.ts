@@ -32,8 +32,6 @@ export default async (ctx: any) => {
                 dockerdHost: flags.dockerdHost,
                 dockerdPort: flags.dockerdPort,
                 ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                locale: flags.locale,
-                timezoneId: flags.timezoneId,
                 timeout: flags.timeout,
                 cypressConfigFile: flags.cypressConfigFile,
             });

@@ -14,8 +14,6 @@ export type Analysis = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     samples: any[];
     ignoreHTTPSErrors: boolean;
-    locale: string;
-    timezoneId: string;
     projectName: string;
     gitInfos: {
         branchName: string;
