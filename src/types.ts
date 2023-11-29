@@ -13,11 +13,7 @@ export type Analysis = {
     baseURL: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     samples: any[];
-    distant: boolean;
-    useAdblock: boolean;
     ignoreHTTPSErrors: boolean;
-    locale: string;
-    timezoneId: string;
     projectName: string;
     gitInfos: {
         branchName: string;

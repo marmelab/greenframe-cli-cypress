@@ -32,14 +32,14 @@ The estimated footprint is 0.038 g eq. co2 ± 1.3% (0.085 Wh).
 To install GreenFrame CLI, type the following command in your favorite terminal:
 
 ```
-curl https://assets.greenframe.io/install.sh | bash
+curl -L https://github.com/marmelab/greenframe-cli-cypress/releases/download/stable/install.sh | bash
 ```
 
 To verify that GreenFrame CLI has correctly been installed, type:
 
 ```
 $ greenframe -v
-enterprise-cli/1.5.0 linux-x64 node-v16.14.0
+enterprise-cli-cypress/1.0.0 linux-x64 node-v16.14.0
 ```
 
 # Usage
@@ -51,30 +51,20 @@ By default, GreenFrame runs a "visit" scenario on a public web page and computes
 You can run a custom scenario instead of the "visit" scenario by passing a scenario file to the `analyze` command:
 
 ```
-$ greenframe analyze https://marmelab.com ./my-scenario.js
+$ greenframe analyze https://marmelab.com ./my-scenario.cy.ts
 ```
 
-GreenFrame uses [PlayWright](https://playwright.dev/) to run scenarios. A custom PlayWright scenario looks like the following:
+GreenFrame uses [Cypress](https://www.cypress.io/) to run scenarios. To discover what a custom Cypress scenario looks alike, you can refer to our [documentation](https://docs.greenframe.io/scenario/).
 
-```js
-// in my-scenario.js
-async (page) => {
-    await page.goto('', { waitUntil: 'networkidle' }); // Go to the baseUrl
-    await page.waitForTimeout(3000); // Wait for 3 seconds
-    await page.scrollToElement('footer'); // Scroll to the footer (if present)
-    await page.waitForNetworkIdle(); // Wait every request has been answered as a normal user.
-};
-```
+Check [the Cypress documentation on writing tests](https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test) for more information.
 
-Check [the PlayWright documentation on writing tests](https://playwright.dev/docs/writing-tests) for more information.
-
-You can test your scenario using the `greenframe open` command. It uses the local Chrome browser to run the scenario:
+You can test your scenario using the `greenframe open` command. It opens Cypress to run the scenario:
 
 ```
-$ greenframe open https://marmelab.com ./my-scenario.js
+$ greenframe open https://marmelab.com ./my-scenario.cy.ts
 ```
 
-You can write scenarios by hand, or use [the PlayWright Test Generator](https://playwright.dev/docs/codegen) to generate a scenario based on a user session.
+You can write scenarios by hand, or use [the Cypress Studio](https://docs.cypress.io/guides/references/cypress-studio) to generate a scenario based on a user session.
 
 ## Full-Stack Analysis
 
@@ -97,21 +87,6 @@ $ greenframe analyze https://localhost:3000/ ./my-scenario.js --containers="ente
 ```
 
 GreenFrame needs to identify database containers because it computes the impact of network I/O differently between the client and the server, and within the server infrastructure.
-
-## Using An Ad Blocker
-
-Third-party tags can be a significant source of energy consumption. When you use the `--useAdblock` option, GreenFrame uses an Ad Blocker to let you estimate that cost.
-
-Run two analyses, a normal one then an ad-blocked one, and compare the results:
-
-```sh
-$ greenframe analyze https://adweek.com
-The estimated footprint is 0.049 g eq. co2 ± 1% (0.112 Wh).
-$ greenframe analyze https://adweek.com --useAdblock
-The estimated footprint is 0.028 g eq. co2 ± 1.1% (0.063 Wh).
-```
-
-In this example, the cost of ads and analytics is 0.049g - 0.028g = 0.021g eq. co2 (42% of the total footprint).
 
 ## Defining A Threshold
 
@@ -182,16 +157,20 @@ scenarios:
       threshold: 0.1
 projectName: YOUR_PROJECT_NAME
 samples: 3
-distant: false
-useAdblock: true
+//distant: "This option has been deprecated due to security issues"
+//useAdblock: "This option has been deprecated for greenframe-cli with cypress"
 ignoreHTTPSErrors: true
-locale: 'fr-FR',
-timezoneId: 'Europe/Paris',
+//locale: "This option has been deprecated for greenframe-cli with cypress",
+//timezoneId: "This option has been deprecated for greenframe-cli with cypress",
 containers:
     - 'CONTAINER_NAME'
     - 'ANOTHER_CONTAINER_NAME'
 databaseContainers:
-    - 'DATABASE_CONTAINER_NAME'
+    - 'DATABASE_CONTAINER_NAME',
+envFile: PATH_TO_YOUR_ENVIRONMENT_VAR_FILE
+envVar:
+    - envVarA: 'An environment variable needed for the scenario (ie : a secret-key)',
+    - envVarB: 'Another environment variable needed'
 ```
 
 ## More Information / Troubleshooting
@@ -243,9 +222,9 @@ Create an analysis on GreenFrame server.
 ```
 USAGE
   $ greenframe analyze [BASEURL] [SCENARIO] [-C <value>] [-K <value>] [-t <value>] [-p <value>] [-c <value>]
-    [--commitId <value>] [-b <value>] [-s <value>] [-d] [-a] [-i] [--locale] [--timezoneId] [--dockerdHost <value>]
-    [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>] [--kubeContainers <value>]
-    [--kubeDatabaseContainers <value>]
+    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>] [--dockerdHost <value>] [--dockerdPort
+    <value>] [--containers <value>] [--databaseContainers <value>] [--kubeContainers <value>] [--kubeDatabaseContainers
+    <value>] [--timeout <value>] [--cypressConfigFile <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -253,30 +232,30 @@ ARGUMENTS
 
 FLAGS
   -C, --configFile=<value>          Path to config file
+  -E, --envFile=<value>             File of environment vars
   -K, --kubeConfig=<value>          Path to kubernetes client config file
-  -a, --useAdblock                  Use an adblocker during analysis
   -b, --branchName=<value>          Pass branch name manually
   -c, --commitMessage=<value>       Pass commit message manually
-  -d, --distant                     Run a distant analysis on GreenFrame Server instead of locally
+  -e, --envVar=<value>...           List of environment vars to read in the scenarios
   -i, --ignoreHTTPSErrors           Ignore HTTPS errors during analysis
   -p, --projectName=<value>         Project name
   -s, --samples=<value>             Number of runs done for the score computation
   -t, --threshold=<value>           Consumption threshold
   --commitId=<value>                Pass commit id manually
   --containers=<value>              Pass containers manually
+  --cypressConfigFile=<value>       Path to custom cypress config file
   --databaseContainers=<value>      Pass database containers manually
   --dockerdHost=<value>             Docker daemon host
   --dockerdPort=<value>             Docker daemon port
   --kubeContainers=<value>          Pass kubebernetes containers manually
   --kubeDatabaseContainers=<value>  Pass kubebernetes database containers manually
-  --locale                          Set greenframe browser locale
-  --timezoneId                      Set greenframe browser timezoneId
+  --timeout=<value>                 Timeout for scenario run in ms
 
 DESCRIPTION
   Create an analysis on GreenFrame server.
 ```
 
-_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli/blob/v1.6.8/dist/commands/analyze.ts)_
+_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/analyze.ts)_
 
 ## `greenframe kube-config`
 
@@ -293,13 +272,11 @@ FLAGS
 
 DESCRIPTION
   Configure kubernetes cluster to collect greenframe metrics
-
   ...
-
   greenframe kube-config
 ```
 
-_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli/blob/v1.6.8/dist/commands/kube-config.ts)_
+_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/kube-config.ts)_
 
 ## `greenframe open [BASEURL] [SCENARIO]`
 
@@ -307,7 +284,7 @@ Open browser to develop your GreenFrame scenario
 
 ```
 USAGE
-  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId]
+  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [--ignoreHTTPSErrors]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -315,20 +292,15 @@ ARGUMENTS
 
 FLAGS
   -C, --configFile=<value>  Path to config file
-  -a, --useAdblock          Use an adblocker during analysis
   --ignoreHTTPSErrors       Ignore HTTPS errors during analysis
-  --locale                  Set greenframe browser locale
-  --timezoneId              Set greenframe browser timezoneId
 
 DESCRIPTION
   Open browser to develop your GreenFrame scenario
-
   ...
-
   greenframe analyze ./yourScenario.js https://greenframe.io
 ```
 
-_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli/blob/v1.6.8/dist/commands/open.ts)_
+_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/open.ts)_
 
 ## `greenframe update [CHANNEL]`
 
@@ -343,13 +315,11 @@ ARGUMENTS
 
 DESCRIPTION
   Update GreenFrame to the latest version
-
   ...
-
   greenframe update
 ```
 
-_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli/blob/v1.6.8/dist/commands/update.ts)_
+_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/update.ts)_
 <!-- commandsstop -->
 
 ## Development
@@ -369,7 +339,7 @@ $ yarn build
 Then you can run the CLI:
 
 ```sh
-$ ./bin/run analyze https://greenframe.io ./src/examples/visit.js
+$ ./bin/run analyze https://greenframe.io ./src/examples/visit-cypress.cy.ts
 ```
 
 While developing, instead of running `yarn build` each time you make a change, you can watch for changes and automatically recompile with:

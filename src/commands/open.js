@@ -1,6 +1,6 @@
 const { Command, Flags } = require('@oclif/core');
+const path = require('node:path');
 
-const { readFileToString } = require('../services/readFileToString');
 const { parseConfigFile, resolveParams } = require('../services/parseConfigFile');
 
 const executeScenario = require('../runner/scenarioWrapper.js');
@@ -21,7 +21,6 @@ class OpenCommand extends Command {
 
     static defaultFlags = {
         configFile: './.greenframe.yml',
-        useAdblock: false,
         ignoreHTTPSErrors: false,
     };
 
@@ -31,18 +30,8 @@ class OpenCommand extends Command {
             description: 'Path to config file',
             required: false,
         }),
-        useAdblock: Flags.boolean({
-            char: 'a',
-            description: 'Use an adblocker during analysis',
-        }),
         ignoreHTTPSErrors: Flags.boolean({
             description: 'Ignore HTTPS errors during analysis',
-        }),
-        locale: Flags.boolean({
-            description: 'Set greenframe browser locale',
-        }),
-        timezoneId: Flags.boolean({
-            description: 'Set greenframe browser timezoneId',
         }),
     };
 
@@ -63,17 +52,14 @@ class OpenCommand extends Command {
         console.info(`Running ${args.scenarios.length} scenarios...`);
         for (let index = 0; index < args.scenarios.length; index++) {
             const scenario = args.scenarios[index];
-            const scenarioFile = await readFileToString(configFilePath, scenario.path);
+            const scenarioPath = path.resolve(scenario.path);
             try {
-                const { timelines } = await executeScenario(scenarioFile, {
+                const { timelines } = await executeScenario(scenarioPath, {
                     debug: true,
                     baseUrl: args.baseURL,
                     executablePath,
-                    useAdblock: flags.useAdblock,
                     extraHosts: args.extraHosts,
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                    locale: flags.locale,
-                    timezoneId: flags.timezoneId,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${
@@ -89,10 +75,10 @@ class OpenCommand extends Command {
         }
 
         console.info(`
-GreenFrame scenarios finished successfully !
+        GreenFrame scenarios finished successfully !
 
-You can now run an analysis to estimate the consumption of your application.
-        `);
+        You can now run an analysis to estimate the consumption of your application.
+                `);
     }
 }
 

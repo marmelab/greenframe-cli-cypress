@@ -34,37 +34,39 @@ export const executeScenarioAndGetContainerStats = async ({
     scenario,
     url,
     samples = DEFAULT_SAMPLES,
-    useAdblock,
     ignoreHTTPSErrors,
-    locale,
-    timezoneId,
     containers = [],
     databaseContainers = [],
     kubeContainers = [],
     kubeDatabaseContainers = [],
     extraHosts = [],
+    envVars = [],
+    envFile = '',
     dockerdHost,
     dockerdPort,
+    timeout,
+    cypressConfigFile,
 }: {
     scenario: string;
     url: string;
     samples?: number;
-    useAdblock?: boolean;
     ignoreHTTPSErrors?: boolean;
-    locale?: string;
-    timezoneId?: string;
     containers?: string[] | string;
     databaseContainers?: string[] | string;
     kubeContainers?: string[];
     kubeDatabaseContainers?: string[];
     extraHosts?: string[];
+    envVars?: string[];
+    envFile?: string;
     dockerdHost?: string;
     dockerdPort?: number;
+    timeout?: number;
+    cypressConfigFile?: string;
 }) => {
     try {
         debug('Starting container');
         await stopContainer();
-        await createContainer(extraHosts);
+        await createContainer(extraHosts, envVars, envFile, Boolean(cypressConfigFile));
         await startContainer();
         debug('Container started');
         let allContainers: {
@@ -84,8 +86,6 @@ export const executeScenarioAndGetContainerStats = async ({
         if (typeof containers === 'string') {
             containers = containers.split(',');
         }
-
-        const allMilestones = [];
 
         allContainers = allContainers.concat(
             containers.map((container) => ({
@@ -132,14 +132,11 @@ export const executeScenarioAndGetContainerStats = async ({
 
             const stop = getPodsStats(nodes);
 
-            const { timelines, milestones } = await execScenarioContainer(scenario, url, {
-                useAdblock,
+            const { timelines } = await execScenarioContainer(scenario, url, {
                 ignoreHTTPSErrors,
-                locale,
-                timezoneId,
+                timeout,
+                cypressConfigFile,
             });
-
-            allMilestones.push(milestones);
 
             allContainers = allContainers.map((container) => {
                 if (!container.stopContainerStats) {
@@ -181,7 +178,7 @@ export const executeScenarioAndGetContainerStats = async ({
         mergePodStatsWithNetworkStats(nodes, kubernetesResults);
         allContainers = [...allContainers, ...Object.values(kubernetesResults)];
         debug('Returning', allContainers.length);
-        return { allContainers, allMilestones };
+        return { allContainers };
     } catch (error) {
         debug('Error', error);
         throw error;

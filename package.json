@@ -1,32 +1,29 @@
 {
-    "name": "greenframe-cli",
-    "description": "Official GreenFrame CLI",
-    "version": "1.6.8",
+    "name": "greenframe-cli-cypress",
+    "description": "Official GreenFrame CLI with Cypress runner",
+    "version": "0.1.1",
     "author": "Marmelab",
     "bin": {
         "greenframe": "./bin/run"
     },
-    "bugs": "https://github.com/marmelab/greenframe-cli/issues",
+    "bugs": "https://github.com/marmelab/greenframe-cli-cypress/issues",
     "dependencies": {
-        "@cliqz/adblocker-playwright": "^1.25.0",
         "@kubernetes/client-node": "^0.17.0",
         "@oclif/core": "^1.2.0",
         "@sentry/node": "^6.13.3",
         "axios": "^0.22.0",
         "core-js-pure": "^3.24.0",
         "cross-fetch": "^3.1.4",
+        "cypress": "13.3.0",
         "env-ci": "^5.0.2",
         "js-yaml": "^4.1.0",
         "listr2": "^3.12.2",
         "lodash": "^4.17.21",
         "mathjs": "^9.5.0",
         "minimist": "^1.2.5",
-        "oclif": "^2.4.3",
-        "playwright": "1.30.0",
-        "vm2": "3.9.16"
+        "oclif": "^2.4.3"
     },
     "devDependencies": {
-        "@aws-sdk/client-s3": "^3.36.0",
         "@babel/core": "^7.15.8",
         "@babel/eslint-parser": "^7.15.8",
         "@types/axios": "^0.14.0",
@@ -72,11 +69,11 @@
         "/dist",
         "/src/examples"
     ],
-    "homepage": "https://github.com/marmelab/greenframe",
+    "homepage": "https://github.com/marmelab/greenframe-cli-cypress",
     "keywords": [
         "oclif"
     ],
-    "license": "UNLICENSED",
+    "license": "Elastic License 2.0",
     "exports": {
         ".": {
             "default": "./dist/index.js",
@@ -98,15 +95,9 @@
         ],
         "additionalVersionFlags": [
             "-v"
-        ],
-        "update": {
-            "s3": {
-                "bucket": "assets.greenframe.io",
-                "host": "https://assets.greenframe.io"
-            }
-        }
+        ]
     },
-    "repository": "marmelab/greenframe-cli",
+    "repository": "marmelab/greenframe-cli-cypress",
     "scripts": {
         "watch": "rm -rf ./dist && mkdir -p ./dist/bash && cp -R ./src/bash ./dist/ && tsc --watch",
         "build": "rm -rf ./dist && tsc && mkdir -p ./dist/bash &&cp -R ./src/bash ./dist/",
@@ -120,7 +111,7 @@
         "version": "oclif readme && git add README.md",
         "pack": "oclif pack tarballs",
         "analyze": "API_URL=http://localhost:3006 APP_URL=http://localhost:3003 ./bin/run analyze",
-        "upload-installation-scripts": "node ./scripts/uploadInstallScript.js",
+        "open": "API_URL=http://localhost:3006 APP_URL=http://localhost:3003 ./bin/run open",
         "lint": "eslint .",
         "typecheck": "tsc --noEmit --pretty"
     },

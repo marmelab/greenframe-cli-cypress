@@ -8,7 +8,12 @@ const initDebug = require('debug');
 const PROJECT_ROOT = path.resolve(__dirname, '../../../');
 const debug = initDebug('greenframe:services:container:execScenarioContainer');
 
-const createContainer = async (extraHosts = []) => {
+const createContainer = async (
+    extraHosts = [],
+    envVars = [],
+    envFile = '',
+    isCypressConfigFile
+) => {
     const { stdout } = await exec(`${PROJECT_ROOT}/dist/bash/getHostIP.sh`);
     const HOSTIP = stdout;
     const extraHostsFlags = extraHosts
@@ -18,9 +23,17 @@ const createContainer = async (extraHosts = []) => {
     const extraHostsEnv =
         extraHosts.length > 0 ? ` -e EXTRA_HOSTS=${extraHosts.join(',')}` : '';
 
+    const envString = buildEnvVarList(envVars, envFile);
+
     debug(`Creating container ${CONTAINER_DEVICE_NAME} with extraHosts: ${extraHosts}`);
 
-    const dockerStatCommand = `docker rm -f ${CONTAINER_DEVICE_NAME} && docker create --tty --name ${CONTAINER_DEVICE_NAME} --rm -e HOSTIP=${HOSTIP}${extraHostsEnv} --add-host localhost:${HOSTIP} ${extraHostsFlags} mcr.microsoft.com/playwright:v1.30.0-focal`;
+    const dockerCleanPreviousCommand = `docker rm -f ${CONTAINER_DEVICE_NAME}`;
+    const allEnvVars = ` -e HOSTIP=${HOSTIP}${extraHostsEnv}${envString}`;
+    const volumeString = '-v "$(pwd)":/scenarios';
+    const dockerCreateCommand = `docker create --entrypoint=/bin/sh --tty --name ${CONTAINER_DEVICE_NAME} --rm${allEnvVars} --add-host localhost:${HOSTIP} ${extraHostsFlags} ${volumeString} cypress/included:13.3.0`;
+
+    const dockerStatCommand = `${dockerCleanPreviousCommand} &&  ${dockerCreateCommand}`;
+    debug(`Docker command: ${dockerStatCommand}`);
     await exec(dockerStatCommand);
 
     debug(`Container ${CONTAINER_DEVICE_NAME} created`);
@@ -29,6 +42,12 @@ const createContainer = async (extraHosts = []) => {
     // For some reason, mounting the volume when you're doing docker in docker doesn't work, but the copy command does.
     const dockerCopyCommand = `docker cp ${PROJECT_ROOT} ${CONTAINER_DEVICE_NAME}:/greenframe`;
     await exec(dockerCopyCommand);
+    // If there is no cypressConfigFile, copy the /greenframe/cypress folder to /scenarios/default-greenframe-config
+    if (!isCypressConfigFile) {
+        const copyCypressConfig = `docker cp ${PROJECT_ROOT}/cypress/. ${CONTAINER_DEVICE_NAME}:/scenarios/default-greenframe-config`;
+        await exec(copyCypressConfig);
+    }
+
     debug(`Files copied to container ${CONTAINER_DEVICE_NAME}`);
 };
 
@@ -44,39 +63,38 @@ const startContainer = async () => {
 const execScenarioContainer = async (
     scenario,
     url,
-    { useAdblock, ignoreHTTPSErrors, locale, timezoneId } = {}
+    { ignoreHTTPSErrors, timeout, cypressConfigFile } = {}
 ) => {
     try {
         let command = `docker exec ${CONTAINER_DEVICE_NAME} node /greenframe/dist/runner/index.js --scenario="${encodeURIComponent(
             scenario
         )}" --url="${encodeURIComponent(url)}"`;
 
-        if (useAdblock) {
-            command += ` --useAdblock`;
-        }
-
         if (ignoreHTTPSErrors) {
             command += ` --ignoreHTTPSErrors`;
         }
 
-        if (locale) {
-            command += ` --locale=${locale}`;
+        if (timeout) {
+            command += ` --timeout=${timeout}`;
         }
 
-        if (timezoneId) {
-            command += ` --timezoneId=${timezoneId}`;
+        if (cypressConfigFile) {
+            command += ` --cypressConfigFile=${cypressConfigFile}`;
         }
+
+        debug(`Executing command: ${command}`);
+
+        const GARBAGE_CYPRESS_ERROR = 'DevTools listening on ws://127.0.0.1';
 
         const { stdout, stderr } = await exec(command);
 
-        if (stderr) {
+        if (stderr && !stderr.includes(GARBAGE_CYPRESS_ERROR)) {
             throw new Error(stderr);
         }
 
         const timelines = JSON.parse(stdout.split('=====TIMELINES=====')[1]);
-        const milestones = JSON.parse(stdout.split('=====MILESTONES=====')[1] || '[]');
 
-        return { timelines, milestones };
+        return { timelines };
     } catch (error) {
         throw new ScenarioError(error.stderr || error.message);
     }
@@ -98,7 +116,26 @@ const stopContainer = async () => {
     return 'OK';
 };
 
+const buildEnvVarList = (envVars = [], envFile = '') => {
+    const envVarString =
+        envVars.length > 0
+            ? envVars.reduce((list, envVarName) => {
+                  if (envVarName.includes('=')) {
+                      return `${list} -e ${envVarName}`;
+                  }
+
+                  const envVarValue = process.env[envVarName];
+                  return `${list} -e ${envVarName}=${envVarValue}`;
+              }, '')
+            : '';
+
+    const envVarFileString = envFile ? ` --env-file ${envFile}` : '';
+
+    return `${envVarString}${envVarFileString ? envVarFileString : ''}`;
+};
+
 module.exports = {
+    buildEnvVarList,
     createContainer,
     startContainer,
     execScenarioContainer,

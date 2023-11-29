@@ -1,7 +1,8 @@
-import { createStatStore, getComputedStat, getContainers } from '../statStore';
-import type { StatStore } from '../statStore';
-import { ComputedStatWithMeta } from '../../../types';
+import { expect, it, test } from '@jest/globals';
 import { CONTAINER_TYPES } from '../../../constants';
+import { ComputedStatWithMeta, Meta } from '../../../types';
+import type { StatStore } from '../statStore';
+import { createStatStore, getComputedStat, getContainers } from '../statStore';
 
 const generator: Array<[number, number, string, number]> = [
     [0, 0, '00Z', 1e3],
@@ -65,27 +66,39 @@ test.each<ComputedStatsProfile>([
     [{ sample: 0, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e4 - 1e4],
     [{ sample: 1, container: 'c0', type: CONTAINER_TYPES.SERVER }, 3e5 - 1e5],
     [{ sample: 1, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e6 - 1e6],
-])('getCpuUsage %#', (meta, cpuUsageInUsermode) => {
-    expect(getComputedStat(store, meta)?.cpuUsage).toEqual(cpuUsageInUsermode);
-});
+])(
+    'getCpuUsage %#',
+    (
+        meta: Meta & { timeFrameTitle?: string | undefined },
+        cpuUsageInUsermode: unknown
+    ) => {
+        expect(getComputedStat(store, meta)?.cpuUsage).toEqual(cpuUsageInUsermode);
+    }
+);
 
 test.each<ComputedStatsProfile>([
     [{ sample: 0, container: 'c0', type: CONTAINER_TYPES.SERVER }, 3e3 - 1e3],
     [{ sample: 0, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e4 - 1e4],
     [{ sample: 1, container: 'c0', type: CONTAINER_TYPES.SERVER }, 3e5 - 1e5],
     [{ sample: 1, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e6 - 1e6],
-])('getUserTime %#', (meta, systemCpuUsage) => {
-    expect(getComputedStat(store, meta)?.userTime).toEqual(systemCpuUsage);
-});
+])(
+    'getUserTime %#',
+    (meta: Meta & { timeFrameTitle?: string | undefined }, systemCpuUsage: unknown) => {
+        expect(getComputedStat(store, meta)?.userTime).toEqual(systemCpuUsage);
+    }
+);
 
 test.each<ComputedStatsProfile>([
     [{ container: 'c0', sample: 0, type: CONTAINER_TYPES.SERVER }, 3e3 / 1e9],
     [{ container: 'c1', sample: 0, type: CONTAINER_TYPES.SERVER }, 3e4 / 1e9],
     [{ container: 'c0', sample: 1, type: CONTAINER_TYPES.SERVER }, 3e5 / 1e9],
     [{ container: 'c1', sample: 1, type: CONTAINER_TYPES.SERVER }, 3e6 / 1e9],
-])('getMem %#', (meta, result) => {
-    expect(getComputedStat(store, meta)?.memoryUsage).toEqual(result);
-});
+])(
+    'getMem %#',
+    (meta: Meta & { timeFrameTitle?: string | undefined }, result: unknown) => {
+        expect(getComputedStat(store, meta)?.memoryUsage).toEqual(result);
+    }
+);
 
 it.todo('getNetwork');
 
@@ -96,13 +109,16 @@ test.each<ComputedStatsProfile>([
     [{ sample: 0, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e4 - 1e4],
     [{ sample: 1, container: 'c0', type: CONTAINER_TYPES.SERVER }, 3e5 - 1e5],
     [{ sample: 1, container: 'c1', type: CONTAINER_TYPES.SERVER }, 3e6 - 1e6],
-])('getTime %#', (meta, systemCpuUsage) => {
-    expect(getComputedStat(store, meta)?.time).toEqual(systemCpuUsage);
-});
+])(
+    'getTime %#',
+    (meta: Meta & { timeFrameTitle?: string | undefined }, systemCpuUsage: unknown) => {
+        expect(getComputedStat(store, meta)?.time).toEqual(systemCpuUsage);
+    }
+);
 
 test.each<[ReturnType<typeof getContainers>]>([[['c0', 'c1']]])(
     'getContainers %#',
-    (result) => {
+    (result: Iterable<unknown> | null | undefined) => {
         expect(new Set(getContainers(store))).toEqual(new Set(result));
     }
 );

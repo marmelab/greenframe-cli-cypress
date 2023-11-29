@@ -10,12 +10,8 @@ export const createAnalysis = async ({
     scenarios,
     baseURL,
     samples,
-    distant,
-    useAdblock,
     projectName,
     gitInfos,
-    locale,
-    timezoneId,
     ignoreHTTPSErrors,
 }: Analysis) => {
     const { commitMessage, branchName, commitId, defaultBranchCommitReference } =
@@ -26,15 +22,11 @@ export const createAnalysis = async ({
         scenarios,
         url: baseURL,
         samples,
-        distant,
-        useAdblock,
         projectName,
         gitCommitMessage: commitMessage,
         gitBranchName: branchName,
         gitCommitId: commitId,
         gitDefaultBranchCommitReference: defaultBranchCommitReference,
-        locale,
-        timezoneId,
         ignoreHTTPSErrors,
     });
 };
@@ -61,7 +53,7 @@ export const saveFailedAnalysis = async (
     { errorCode, errorMessage }: { errorCode: string; errorMessage: string }
 ) => {
     debug('saveFailedAnalysis', analysisId);
-    return instance.post(`/analyses/${analysisId}/fail`, {
+    return instance.post(`/analyses/${analysisId}/failed`, {
         errorCode,
         errorMessage: errorMessage.toString(),
     });

@@ -8,5 +8,4 @@ export * from './stat-tools/providers/docker';
 export * from './stat-tools/providers/kubernetes';
 export * from './stat-tools/getConsumption';
 export * from './stat-tools/getAverageStats';
-export * from './stat-tools/getAverageMilestones';
 export * from './stat-tools/mergeScore';

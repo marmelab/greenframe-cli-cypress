@@ -1,3 +1,5 @@
+const { describe, expect, it } = require('@jest/globals');
+
 jest.mock('node:child_process', () => ({
     exec: jest.fn(),
 }));
@@ -32,10 +34,10 @@ describe('#getCommitMessage', () => {
 describe('#getBranchName', () => {
     it('Should call exec', async () => {
         exec.mockReturnValue({ stdout: 'BRANCH NAME' });
-        const commitMessage = await getBranchName();
+        const branchMessage = await getBranchName();
         expect(exec).toHaveBeenCalledTimes(1);
-        expect(exec).toHaveBeenCalledWith('git rev-parse --abbrev-ref HEAD');
-        expect(commitMessage).toBe('BRANCH NAME');
+        expect(exec).toHaveBeenCalledWith('git branch --show-current');
+        expect(branchMessage).toBe('BRANCH NAME');
     });
     afterEach(() => {
         exec.mockClear();

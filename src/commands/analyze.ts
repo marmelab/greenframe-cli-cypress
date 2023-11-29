@@ -9,7 +9,9 @@ import ERROR_CODES from '../services/errors/errorCodes';
 import logErrorOnSentry from '../services/errors/Sentry';
 
 import { DEFAULT_SAMPLES } from '../constants';
+export const DEFAULT_CONFIG_FILE = './.greenframe.yml';
 
+import checkGreenFrameSecretToken from '../tasks/checkGreenFrameSecretToken';
 import createNewAnalysis from '../tasks/createNewAnalysis';
 import detectDockerVersion from '../tasks/detectDockerVersion';
 import detectKubernetesVersion from '../tasks/detectKubernetesVersion';
@@ -19,7 +21,26 @@ import initializeKubeClient from '../tasks/initializeKubeClient';
 import retrieveGitInformations from '../tasks/retrieveGitInformations';
 import retrieveGreenFrameProject from '../tasks/retrieveGreenFrameProject';
 import runScenarioAndSaveResults from '../tasks/runScenariosAndSaveResult';
-import checkGreenFrameSecretToken from '../tasks/checkGreenFrameSecretToken';
+
+let analysisId: string | null = null;
+
+process.on('SIGINT' || 'SIGKILL' || 'SIGTERM' || 'SIGQUIT', async function () {
+    if (analysisId !== null) {
+        try {
+            await saveFailedAnalysis(analysisId, {
+                errorCode: ERROR_CODES.UNKNOWN_ERROR,
+                errorMessage: 'Analysis stopped with Ctrl+C',
+            });
+        } catch (error) {
+            console.log('error :', error);
+        }
+    }
+
+    setTimeout(() => {
+        process.exit(1);
+    }, 299);
+});
+
 class AnalyzeCommand extends Command {
     static args = [
         {
@@ -34,10 +55,8 @@ class AnalyzeCommand extends Command {
     ];
 
     static defaultFlags = {
-        configFile: './.greenframe.yml',
+        configFile: DEFAULT_CONFIG_FILE,
         samples: DEFAULT_SAMPLES,
-        distant: false,
-        useAdblock: false,
         ignoreHTTPSErrors: false,
     };
 
@@ -75,23 +94,20 @@ class AnalyzeCommand extends Command {
             char: 's',
             description: 'Number of runs done for the score computation',
         }),
-        distant: Flags.boolean({
-            char: 'd',
-            description: 'Run a distant analysis on GreenFrame Server instead of locally',
-        }),
-        useAdblock: Flags.boolean({
-            char: 'a',
-            description: 'Use an adblocker during analysis',
-        }),
         ignoreHTTPSErrors: Flags.boolean({
             char: 'i',
             description: 'Ignore HTTPS errors during analysis',
         }),
-        locale: Flags.boolean({
-            description: 'Set greenframe browser locale',
+        envVar: Flags.string({
+            char: 'e',
+            description: 'List of environment vars to read in the scenarios',
+            required: false,
+            multiple: true,
         }),
-        timezoneId: Flags.boolean({
-            description: 'Set greenframe browser timezoneId',
+        envFile: Flags.string({
+            char: 'E',
+            description: 'File of environment vars',
+            required: false,
         }),
         dockerdHost: Flags.string({
             description: 'Docker daemon host',
@@ -111,10 +127,15 @@ class AnalyzeCommand extends Command {
         kubeDatabaseContainers: Flags.string({
             description: 'Pass kubebernetes database containers manually',
         }),
+        timeout: Flags.integer({
+            description: 'Timeout for scenario run in ms',
+        }),
+        cypressConfigFile: Flags.string({
+            description: 'Path to custom cypress config file',
+        }),
     };
 
     async run() {
-        let analysisId;
         try {
             const commandParams = await this.parse(AnalyzeCommand);
             const configFilePath =
@@ -128,7 +149,7 @@ class AnalyzeCommand extends Command {
                 commandParams
             );
 
-            const isDistant = flags.distant;
+            const isDistant = false;
             const isFree = process.env.GREENFRAME_SECRET_TOKEN == null;
             const tasks = new Listr(
                 [
@@ -197,6 +218,7 @@ class AnalyzeCommand extends Command {
                             });
                             const tasks = task.newListr(tasksDefinition, {
                                 rendererOptions: { collapse: false },
+                                registerSignalListeners: false,
                             });
                             return tasks;
                         },
@@ -204,10 +226,11 @@ class AnalyzeCommand extends Command {
                 ],
                 {
                     renderer: process.env.DEBUG ? 'verbose' : 'default',
+                    registerSignalListeners: false,
                 }
             );
             const { result } = await tasks.run();
-            displayAnalysisResults(result, isFree, isDistant);
+            displayAnalysisResults(result, isFree);
         } catch (error: any) {
             console.error('\n❌ Failed!');
             console.error(error.name);
@@ -218,7 +241,7 @@ class AnalyzeCommand extends Command {
             }
 
             try {
-                if (analysisId) {
+                if (analysisId !== null) {
                     await saveFailedAnalysis(analysisId, {
                         errorCode: error.errorCode || ERROR_CODES.UNKNOWN_ERROR,
                         errorMessage: error.response?.data || error.message,
