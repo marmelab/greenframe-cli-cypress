@@ -51,7 +51,7 @@ By default, GreenFrame runs a "visit" scenario on a public web page and computes
 You can run a custom scenario instead of the "visit" scenario by passing a scenario file to the `analyze` command:
 
 ```
-$ greenframe analyze https://marmelab.com ./my-scenario.js
+$ greenframe analyze https://marmelab.com ./my-scenario.cy.ts
 ```
 
 GreenFrame uses [Cypress](https://www.cypress.io/) to run scenarios. To discover what a custom Cypress scenario looks alike, you can refer to our [documentation](https://docs.greenframe.io/scenario/).
@@ -61,7 +61,7 @@ Check [the Cypress documentation on writing tests](https://docs.cypress.io/guide
 You can test your scenario using the `greenframe open` command. It opens Cypress to run the scenario:
 
 ```
-$ greenframe open https://marmelab.com ./my-scenario.js
+$ greenframe open https://marmelab.com ./my-scenario.cy.ts
 ```
 
 You can write scenarios by hand, or use [the Cypress Studio](https://docs.cypress.io/guides/references/cypress-studio) to generate a scenario based on a user session.
@@ -87,21 +87,6 @@ $ greenframe analyze https://localhost:3000/ ./my-scenario.js --containers="ente
 ```
 
 GreenFrame needs to identify database containers because it computes the impact of network I/O differently between the client and the server, and within the server infrastructure.
-
-## Using An Ad Blocker
-
-Third-party tags can be a significant source of energy consumption. When you use the `--useAdblock` option, GreenFrame uses an Ad Blocker to let you estimate that cost.
-
-Run two analyses, a normal one then an ad-blocked one, and compare the results:
-
-```sh
-$ greenframe analyze https://adweek.com
-The estimated footprint is 0.049 g eq. co2 ± 1% (0.112 Wh).
-$ greenframe analyze https://adweek.com --useAdblock
-The estimated footprint is 0.028 g eq. co2 ± 1.1% (0.063 Wh).
-```
-
-In this example, the cost of ads and analytics is 0.049g - 0.028g = 0.021g eq. co2 (42% of the total footprint).
 
 ## Defining A Threshold
 
@@ -173,10 +158,10 @@ scenarios:
 projectName: YOUR_PROJECT_NAME
 samples: 3
 //distant: "This option has been deprecated due to security issues"
-useAdblock: true
+//useAdblock: "This option has been deprecated for greenframe-cli with cypress"
 ignoreHTTPSErrors: true
-locale: 'fr-FR',
-timezoneId: 'Europe/Paris',
+//locale: "This option has been deprecated for greenframe-cli with cypress",
+//timezoneId: "This option has been deprecated for greenframe-cli with cypress",
 containers:
     - 'CONTAINER_NAME'
     - 'ANOTHER_CONTAINER_NAME'
@@ -225,10 +210,11 @@ This means that the lowest hanging fruit for optimizing the emissions of a web p
 # Commands
 
 <!-- commands -->
-* [`greenframe analyze [BASEURL] [SCENARIO]`](#greenframe-analyze-baseurl-scenario)
-* [`greenframe kube-config`](#greenframe-kube-config)
-* [`greenframe open [BASEURL] [SCENARIO]`](#greenframe-open-baseurl-scenario)
-* [`greenframe update [CHANNEL]`](#greenframe-update-channel)
+
+-   [`greenframe analyze [BASEURL] [SCENARIO]`](#greenframe-analyze-baseurl-scenario)
+-   [`greenframe kube-config`](#greenframe-kube-config)
+-   [`greenframe open [BASEURL] [SCENARIO]`](#greenframe-open-baseurl-scenario)
+-   [`greenframe update [CHANNEL]`](#greenframe-update-channel)
 
 ## `greenframe analyze [BASEURL] [SCENARIO]`
 
@@ -237,9 +223,9 @@ Create an analysis on GreenFrame server.
 ```
 USAGE
   $ greenframe analyze [BASEURL] [SCENARIO] [-C <value>] [-K <value>] [-t <value>] [-p <value>] [-c <value>]
-    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>] [--dockerdHost <value>] [--dockerdPort
-    <value>] [--containers <value>] [--databaseContainers <value>] [--kubeContainers <value>] [--kubeDatabaseContainers
-    <value>] [--timeout <value>] [--cypressConfigFile <value>]
+    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>]
+    [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
+    [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -354,7 +340,7 @@ $ yarn build
 Then you can run the CLI:
 
 ```sh
-$ ./bin/run analyze https://greenframe.io ./src/examples/visit.js
+$ ./bin/run analyze https://greenframe.io ./src/examples/visit-cypress.cy.ts
 ```
 
 While developing, instead of running `yarn build` each time you make a change, you can watch for changes and automatically recompile with:
