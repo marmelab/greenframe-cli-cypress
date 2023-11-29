@@ -16,11 +16,6 @@ const executeScenario = async (scenario, options = {}) => {
     let start;
     let end;
 
-    const context = await browser.newContext({
-        userAgent:
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Safari/537.36',
-        ignoreHTTPSErrors: options.ignoreHTTPSErrors,
-    });
     const timeout = options.timeout || DEFAULT_SCENARIO_TIMEOUT;
 
     const timeoutScenario = setTimeout(() => {
