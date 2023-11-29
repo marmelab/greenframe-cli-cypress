@@ -2,4 +2,3 @@ scenario: './src/examples/greenframe.cy.ts'
 baseURL: 'https://greenframe.io'
 samples: 2
 projectName: 'GreenFrame'
-useAdblock: true

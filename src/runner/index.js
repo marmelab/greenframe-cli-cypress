@@ -25,10 +25,7 @@ const getFilePath = (file) => {
         baseUrl: decodeURIComponent(args.url),
         hostIP: process.env.HOSTIP,
         extraHosts: process.env.EXTRA_HOSTS ? process.env.EXTRA_HOSTS.split(',') : [],
-        useAdblock: args.useAdblock,
         ignoreHTTPSErrors: args.ignoreHTTPSErrors,
-        locale: args.locale,
-        timezoneId: args.timezoneId,
         timeout: args.timeout,
         cypressConfigFile: cypressConfigFile,
     });

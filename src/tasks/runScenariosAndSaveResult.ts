@@ -22,7 +22,6 @@ export default async (ctx: any) => {
                 scenario: scenario.path,
                 url: args.baseURL,
                 samples: flags.samples,
-                useAdblock: flags.useAdblock,
                 containers: flags.containers,
                 databaseContainers: flags.databaseContainers,
                 kubeContainers: flags.kubeContainers,
@@ -33,8 +32,6 @@ export default async (ctx: any) => {
                 dockerdHost: flags.dockerdHost,
                 dockerdPort: flags.dockerdPort,
                 ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                locale: flags.locale,
-                timezoneId: flags.timezoneId,
                 timeout: flags.timeout,
                 cypressConfigFile: flags.cypressConfigFile,
             });

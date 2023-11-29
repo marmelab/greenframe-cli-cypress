@@ -10,11 +10,8 @@ export const createAnalysis = async ({
     scenarios,
     baseURL,
     samples,
-    useAdblock,
     projectName,
     gitInfos,
-    locale,
-    timezoneId,
     ignoreHTTPSErrors,
 }: Analysis) => {
     const { commitMessage, branchName, commitId, defaultBranchCommitReference } =
@@ -25,14 +22,11 @@ export const createAnalysis = async ({
         scenarios,
         url: baseURL,
         samples,
-        useAdblock,
         projectName,
         gitCommitMessage: commitMessage,
         gitBranchName: branchName,
         gitCommitId: commitId,
         gitDefaultBranchCommitReference: defaultBranchCommitReference,
-        locale,
-        timezoneId,
         ignoreHTTPSErrors,
     });
 };

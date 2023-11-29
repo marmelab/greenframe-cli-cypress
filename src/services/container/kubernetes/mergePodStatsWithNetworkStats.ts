@@ -7,8 +7,8 @@ import { Nodes } from './structureNodes';
  * Merge pods stats with the network stats
  * Divide network stats by the number of linked containers
  * Delete the network stats
- * @param nodes
- * @param runs
+ * @param nodes Nodes
+ * @param runs KerbernetesRuns
  */
 export const mergePodStatsWithNetworkStats = (nodes: Nodes, runs: KubernetesRuns) => {
     for (const node of Object.keys(nodes)) {

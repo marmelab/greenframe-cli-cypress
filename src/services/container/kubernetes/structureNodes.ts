@@ -75,7 +75,8 @@ const addTypeToPod = (
     greenframeId: string,
     container?: string,
     networkContainerId?: string
-): AugmentedPod => {
+    // eslint-disable-next-line max-params
+    ): AugmentedPod => {
     const augmentedPod = {
         type,
         fullName,
@@ -94,7 +95,8 @@ const addPodNodes = async (
     observedNetworkPods: Map<string, AugmentedPod>,
     counterInstance: Map<string, number>,
     type: ValueOf<typeof CONTAINER_TYPES>
-) => {
+    // eslint-disable-next-line max-params
+    ) => {
     for (const namespaceAndLabel of namespacesAndLabels) {
         debug(`Get pods for ${namespaceAndLabel}`);
         const [namespace, rest] = namespaceAndLabel.split(':');

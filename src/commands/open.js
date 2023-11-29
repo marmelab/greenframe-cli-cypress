@@ -21,7 +21,6 @@ class OpenCommand extends Command {
 
     static defaultFlags = {
         configFile: './.greenframe.yml',
-        useAdblock: false,
         ignoreHTTPSErrors: false,
     };
 
@@ -31,18 +30,8 @@ class OpenCommand extends Command {
             description: 'Path to config file',
             required: false,
         }),
-        useAdblock: Flags.boolean({
-            char: 'a',
-            description: 'Use an adblocker during analysis',
-        }),
         ignoreHTTPSErrors: Flags.boolean({
             description: 'Ignore HTTPS errors during analysis',
-        }),
-        locale: Flags.boolean({
-            description: 'Set greenframe browser locale',
-        }),
-        timezoneId: Flags.boolean({
-            description: 'Set greenframe browser timezoneId',
         }),
     };
 
@@ -69,11 +58,8 @@ class OpenCommand extends Command {
                     debug: true,
                     baseUrl: args.baseURL,
                     executablePath,
-                    useAdblock: flags.useAdblock,
                     extraHosts: args.extraHosts,
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
-                    locale: flags.locale,
-                    timezoneId: flags.timezoneId,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${
