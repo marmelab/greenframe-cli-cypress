@@ -237,9 +237,9 @@ Create an analysis on GreenFrame server.
 ```
 USAGE
   $ greenframe analyze [BASEURL] [SCENARIO] [-C <value>] [-K <value>] [-t <value>] [-p <value>] [-c <value>]
-    [--commitId <value>] [-b <value>] [-s <value>] [-a] [-i] [--locale] [--timezoneId] [-e <value>] [-E <value>]
-    [--dockerdHost <value>] [--dockerdPort <value>] [--containers <value>] [--databaseContainers <value>]
-    [--kubeContainers <value>] [--kubeDatabaseContainers <value>] [--timeout <value>] [--cypressConfigFile <value>]
+    [--commitId <value>] [-b <value>] [-s <value>] [-i] [-e <value>] [-E <value>] [--dockerdHost <value>] [--dockerdPort
+    <value>] [--containers <value>] [--databaseContainers <value>] [--kubeContainers <value>] [--kubeDatabaseContainers
+    <value>] [--timeout <value>] [--cypressConfigFile <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -249,7 +249,6 @@ FLAGS
   -C, --configFile=<value>          Path to config file
   -E, --envFile=<value>             File of environment vars
   -K, --kubeConfig=<value>          Path to kubernetes client config file
-  -a, --useAdblock                  Use an adblocker during analysis
   -b, --branchName=<value>          Pass branch name manually
   -c, --commitMessage=<value>       Pass commit message manually
   -e, --envVar=<value>...           List of environment vars to read in the scenarios
@@ -265,15 +264,13 @@ FLAGS
   --dockerdPort=<value>             Docker daemon port
   --kubeContainers=<value>          Pass kubebernetes containers manually
   --kubeDatabaseContainers=<value>  Pass kubebernetes database containers manually
-  --locale                          Set greenframe browser locale
   --timeout=<value>                 Timeout for scenario run in ms
-  --timezoneId                      Set greenframe browser timezoneId
 
 DESCRIPTION
   Create an analysis on GreenFrame server.
 ```
 
-_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/analyze.ts)_
+_See code: [dist/commands/analyze.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/analyze.ts)_
 
 ## `greenframe kube-config`
 
@@ -294,7 +291,7 @@ DESCRIPTION
   greenframe kube-config
 ```
 
-_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/kube-config.ts)_
+_See code: [dist/commands/kube-config.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/kube-config.ts)_
 
 ## `greenframe open [BASEURL] [SCENARIO]`
 
@@ -302,7 +299,7 @@ Open browser to develop your GreenFrame scenario
 
 ```
 USAGE
-  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [-a] [--ignoreHTTPSErrors] [--locale] [--timezoneId]
+  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [--ignoreHTTPSErrors]
 
 ARGUMENTS
   BASEURL   Your baseURL website
@@ -310,10 +307,7 @@ ARGUMENTS
 
 FLAGS
   -C, --configFile=<value>  Path to config file
-  -a, --useAdblock          Use an adblocker during analysis
   --ignoreHTTPSErrors       Ignore HTTPS errors during analysis
-  --locale                  Set greenframe browser locale
-  --timezoneId              Set greenframe browser timezoneId
 
 DESCRIPTION
   Open browser to develop your GreenFrame scenario
@@ -321,7 +315,7 @@ DESCRIPTION
   greenframe analyze ./yourScenario.js https://greenframe.io
 ```
 
-_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/open.ts)_
+_See code: [dist/commands/open.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/open.ts)_
 
 ## `greenframe update [CHANNEL]`
 
@@ -340,7 +334,7 @@ DESCRIPTION
   greenframe update
 ```
 
-_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.0/dist/commands/update.ts)_
+_See code: [dist/commands/update.ts](https://github.com/marmelab/greenframe-cli-cypress/blob/v0.1.1/dist/commands/update.ts)_
 <!-- commandsstop -->
 
 ## Development
