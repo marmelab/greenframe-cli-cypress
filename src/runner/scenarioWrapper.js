@@ -36,9 +36,10 @@ const executeScenario = async (scenario, options = {}) => {
         headed: options.debug,
         quiet: true,
         configFile:
-            options.cypressConfigFile || options.debug
+            options.cypressConfigFile ||
+            (options.debug
                 ? `${PROJECT_ROOT}/cypress/cypress.config.js`
-                : '/scenarios/default-greenframe-config/cypress.config.js',
+                : '/scenarios/default-greenframe-config/cypress.config.js'),
         runnerUi: false,
     });
 
