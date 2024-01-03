@@ -1,7 +1,7 @@
 {
     "name": "greenframe-cli-cypress",
     "description": "Official GreenFrame CLI with Cypress runner",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "author": "Marmelab",
     "bin": {
         "greenframe": "./bin/run"
