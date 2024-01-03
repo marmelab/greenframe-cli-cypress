@@ -3,7 +3,7 @@ default: help
 PACKAGE_VERSION :=  $(shell node -p -e "require('./package.json').version")
 SHORT_HASH := $(shell git rev-parse --short HEAD)
 
-BUILD_TARGETS := linux-x64,linux-arm,win32-x64,darwin-x64,darwin-arm64
+BUILD_TARGETS := linux-x64,linux-arm64,win32-x64,darwin-x64,darwin-arm64
 DEPLOY_TARGETS := $(BUILD_TARGETS),wsl-x64
 
 help:
