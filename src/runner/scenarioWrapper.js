@@ -1,7 +1,24 @@
+const { cwd } = require('node:process');
 const cypress = require('cypress');
 const path = require('node:path');
 const PROJECT_ROOT = path.resolve(__dirname, '../../');
 const DEFAULT_SCENARIO_TIMEOUT = 2 * 60 * 1000; // Global timeout for executing a scenario
+
+const getConfigFile = (customConfigFile, isDebug) => {
+    if (customConfigFile && isDebug) {
+        return path.resolve(cwd(), customConfigFile);
+    }
+
+    if (customConfigFile && !isDebug) {
+        return customConfigFile;
+    }
+
+    if (!customConfigFile && isDebug) {
+        return `${PROJECT_ROOT}/cypress/cypress.config.js`;
+    }
+
+    return '/scenarios/default-greenframe-config/cypress.config.js';
+};
 
 const executeScenario = async (scenario, options = {}) => {
     let args = ['--disable-web-security'];
@@ -25,7 +42,7 @@ const executeScenario = async (scenario, options = {}) => {
     const cypressResults = await cypress.run({
         browser: 'chrome',
         testingType: 'e2e',
-        project: options.debug ? PROJECT_ROOT : '/scenarios',
+        project: options.debug ? cwd() : '/scenarios',
         spec: scenario,
         config: {
             baseUrl: options.baseUrl,
@@ -35,11 +52,7 @@ const executeScenario = async (scenario, options = {}) => {
         headless: !options.debug,
         headed: options.debug,
         quiet: true,
-        configFile:
-            options.cypressConfigFile ||
-            (options.debug
-                ? `${PROJECT_ROOT}/cypress/cypress.config.js`
-                : '/scenarios/default-greenframe-config/cypress.config.js'),
+        configFile: getConfigFile(options.cypressConfigFile, options.debug),
         runnerUi: false,
     });
 

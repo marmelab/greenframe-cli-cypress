@@ -284,15 +284,17 @@ Open browser to develop your GreenFrame scenario
 
 ```
 USAGE
-  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [--ignoreHTTPSErrors]
+  $ greenframe open [BASEURL] [SCENARIO] [-C <value>] [--ignoreHTTPSErrors] [--cypressConfigFile <value>] [--timeout <value>]
 
 ARGUMENTS
   BASEURL   Your baseURL website
   SCENARIO  Path to your GreenFrame scenario
 
 FLAGS
-  -C, --configFile=<value>  Path to config file
-  --ignoreHTTPSErrors       Ignore HTTPS errors during analysis
+  -C, --configFile=<value>      Path to config file
+  --ignoreHTTPSErrors           Ignore HTTPS errors during analysis
+  --cypressConfigFile=<value>   Path to custom cypress config file
+  --timeout=<value>             Timeout for scenario run in ms
 
 DESCRIPTION
   Open browser to develop your GreenFrame scenario
