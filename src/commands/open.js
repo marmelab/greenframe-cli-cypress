@@ -6,6 +6,7 @@ const { parseConfigFile, resolveParams } = require('../services/parseConfigFile'
 const executeScenario = require('../runner/scenarioWrapper.js');
 
 const { detectExecutablePath } = require('../services/detectExecutablePath');
+
 class OpenCommand extends Command {
     static args = [
         {
@@ -32,6 +33,12 @@ class OpenCommand extends Command {
         }),
         ignoreHTTPSErrors: Flags.boolean({
             description: 'Ignore HTTPS errors during analysis',
+        }),
+        timeout: Flags.integer({
+            description: 'Timeout for scenario run in ms',
+        }),
+        cypressConfigFile: Flags.string({
+            description: 'Path to custom cypress config file',
         }),
     };
 
@@ -60,6 +67,8 @@ class OpenCommand extends Command {
                     executablePath,
                     extraHosts: args.extraHosts,
                     ignoreHTTPSErrors: flags.ignoreHTTPSErrors,
+                    cypressConfigFile: flags.cypressConfigFile,
+                    timeout: flags.timeout,
                 });
                 console.info(
                     `✅ ${scenario.name}: ${
